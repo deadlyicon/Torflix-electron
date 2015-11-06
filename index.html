@@ -3,10 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
+    <script type="text/javascript" src="index.js"></script>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <script>document.write(process.version)</script>
-    and Electron <script>document.write(process.versions['electron'])</script>.
+    <main/>
+
+
+    <webview id="foo" src="https://www.github.com/" style="display:inline-block; width:640px; height:480px"></webview>
+
+
   </body>
 </html>
