@@ -2,7 +2,4 @@
   "name": "your-app",
   "version": "0.1.0",
   "main": "main.js",
-  "dependencies": {
-    "react": "^0.14.2",
-  }
 }
