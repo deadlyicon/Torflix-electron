@@ -9,15 +9,6 @@ const REDIRECT_URI = 'http://torflix.dev' // location.origin
 
 export class Putio {
 
-  constructor(token) {
-    this.setToken(token);
-  }
-
-  setToken(token) {
-    this.token = token;
-    return this;
-  }
-
   siteURI(path, query={}){
     query.oauth_token = this.token;
     return URI(ENDPOINT).query(query).path(path).toString();

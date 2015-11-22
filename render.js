@@ -7,9 +7,8 @@ require('domready')(function(){
 
   var page = new Page;
   window.DEBUG.page = page;
-
   page.element = document.getElementsByTagName('main')[0];
-  page.render();
+  page.start();
 
 
 });

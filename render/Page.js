@@ -1,11 +1,11 @@
-
-
-
 import {ReactatronPage} from './Reactatron/Page'
-// import {Events} from './Events'
 import {Component} from './Component'
 import {Putio} from './Putio'
-// import {StateMachine} from './StateMachine'
+
+import {authenticationActions} from './actions/authenticationActions'
+
+import {LoginPage} from './pages/LoginPage'
+import {HomePage} from './pages/HomePage'
 
 /*
  * Page
@@ -18,9 +18,26 @@ import {Putio} from './Putio'
 export class Page extends ReactatronPage {
 
   constructor(){
-    super()
-    this.Component = PageComponent;
+    super();
     this.putio = new Putio;
+    authenticationActions(this);
+  }
+
+  getInitialState(){
+    return {
+      page: 'Home',
+      putioToken: '',
+    }
+  }
+
+  render(){
+    console.log('rendering', this.state);
+
+    if (!this.state.putioToken){
+      return <LoginPage src={this.putio.generateLoginURI()}/>
+    }
+
+    return <HomePage />
   }
 
 }
@@ -36,17 +53,7 @@ export class Page extends ReactatronPage {
   well need nested controllers??
   static state is sent down and one method is exposed, emit, thats all you get
 */
-var PageComponent = React.createClass({
 
-  getInitialState: function(){
-    return this.props.state
-  },
-
-  render: function(){
-    console.log('rendering', this.state.name);
-    return <div>hello: {this.state.name}</div>;
-  }
-});
 
 // var PageComponent = React.createClass({
 
