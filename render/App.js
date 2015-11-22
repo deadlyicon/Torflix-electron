@@ -1,4 +1,4 @@
-import {ReactatronPage} from './Reactatron/Page'
+import {ReactatronApp} from './Reactatron/App'
 import {Component} from './Component'
 import {Putio} from './Putio'
 
@@ -15,7 +15,7 @@ import {TransfersPage} from './pages/TransfersPage'
  * Changes to state trigger `transitions`
  *
  */
-export class Page extends ReactatronPage {
+export class App extends ReactatronApp {
 
   static get pages(){
     return {

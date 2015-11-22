@@ -1,7 +1,7 @@
 import {Events} from './Events'
 import {LocationPlugin} from './LocationPlugin'
 
-export class ReactatronPage {
+export class ReactatronApp {
 
   constructor(){
     this.state = this.getInitialState();
@@ -23,7 +23,7 @@ export class ReactatronPage {
   }
 
   setState(update){
-    console.info('page.setState', update);
+    console.info('App.setState', update);
     Object.assign(this.state, update);
     // TODO we may want to implement a delay here
     if (this.component){

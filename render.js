@@ -1,10 +1,10 @@
-import {Page} from './render/Page'
+import {App} from './render/App'
 
 window.DEBUG = {};
-window.DEBUG.Page = Page;
+window.DEBUG.App = App;
 window.DEBUG.$ = require('./bower_components/jquery/dist/jquery');
 
-var page = new Page;
-window.DEBUG.page = page;
-page.element = document.getElementsByTagName('main')[0];
-page.start();
+var app = new App;
+window.DEBUG.app = app;
+app.element = document.getElementsByTagName('main')[0];
+app.start();
