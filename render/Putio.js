@@ -19,18 +19,18 @@ export class Putio {
   }
 
   siteURI(path, query={}){
+    query.oauth_token = this.token;
     return URI(ENDPOINT).query(query).path(path).toString();
   }
 
   apiURI(path, query={}){
-    return URI(ENDPOINT).query(query).path(path).toString();
+    query.oauth_token = this.token;
+    return URI(API_ENDPOINT).query(query).path(path).toString();
   }
 
-  get(path,query){
-    return new Request({
-      method: 'get',
-      url: 'https://torrentz.eu/any?q=love'
-    });
+  request(method, url, data){
+    // console.log('REQ:', {method: method, url: url, data: data})
+    return new Request({method: method, url: url, data: data});
   }
 
   generateLoginURI(){
@@ -41,4 +41,9 @@ export class Putio {
       redirect_uri:  REDIRECT_URI,
     });
   }
+
+  accountInfo(){
+    return this.request('get', this.apiURI('/v2/account/info')).then((response) => response.info );
+  }
+
 }
