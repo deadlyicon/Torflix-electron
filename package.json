@@ -4,6 +4,7 @@
   "main": "main.js",
   "dependencies": {
     "babel-loader": "^6.0.1",
+    "request": "^2.67.0",
     "webpack": "^1.12.3"
   },
   "devDependencies": {
