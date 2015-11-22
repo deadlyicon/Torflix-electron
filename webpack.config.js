@@ -1,4 +1,4 @@
-require('./environment.rb');
+// require('./environment.rb');
 var Webpack = require('webpack');
 var path = require('path');
 

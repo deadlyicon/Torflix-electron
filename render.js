@@ -1,6 +1,9 @@
-var Page = require('./render/Page')
+// var jQuery = require('./bower_components/jquery/dist/jquery')
+// var Page = require('./render/Page')
 
-setTimeout(()=>
-  ReactDOM.render(<Page />, document.body.children[0])
-);
+// debugger
+
+// setTimeout(()=>
+//   ReactDOM.render(<Page />, document.body.children[0])
+// );
 
