@@ -61,11 +61,16 @@
 
 	Component = __webpack_require__(4);
 
-	module.exports = Component('Page', {
+	parentTest = {
 
 	  render: function () {
 	    return React.DOM.div({}, 'hello world');
 	  }
+	};
+
+	module.exports = Component('Page', {
+
+	  __proto__: parentTest
 
 	});
 
