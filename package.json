@@ -1,7 +1,12 @@
 {
-  "name": "your-app",
+  "name": "Torflix",
   "version": "0.1.0",
+
   "main": "main.js",
+  "scripts": {
+    "start": "express ",
+    "postinstall": "bin/postinstall"
+  },
   "dependencies": {
     "babel-loader": "^6.0.1",
     "request": "^2.67.0",
