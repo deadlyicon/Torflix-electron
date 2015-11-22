@@ -1,9 +1,11 @@
 var URI = require('urijs');
 
+import {Request} from './Request'
+
 const ENDPOINT     = 'https://put.io'
 const API_ENDPOINT = 'https://api.put.io/v2'
 const CLIENT_ID    = process.env.PUT_IO_CLIENT_ID
-const REDIRECT_URI = location.origin
+const REDIRECT_URI = 'http://torflix.dev' // location.origin
 
 export class Putio {
 
@@ -22,6 +24,13 @@ export class Putio {
 
   apiURI(path, query={}){
     return URI(ENDPOINT).query(query).path(path).toString();
+  }
+
+  get(path,query){
+    return new Request({
+      method: 'get',
+      url: 'https://torrentz.eu/any?q=love'
+    });
   }
 
   generateLoginURI(){
