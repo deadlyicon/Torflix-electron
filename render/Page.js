@@ -1,12 +1,30 @@
-var jQuery = require('../bower_components/jquery/dist/jquery')
+var domready = require('domready')
 import {Component} from './Component'
 import {Putio} from './Putio'
-console.log('Component',Component)
-console.log('Putio',Putio)
 
 var putio = new Putio
 
-export var Page = React.createClass({
+export class Page {
+
+  constructor(){
+
+  }
+
+  renderOnDOMReady(){
+    domready(()=> this.render());
+    return this;
+  }
+
+  render(){
+    this.element = document.getElementsByTagName('main')[0];
+    this.component = ReactDOM.render(<PageComponent />, this.element);
+    return this;
+  }
+
+}
+
+
+var PageComponent = React.createClass({
 
   onLoad: function(event){
     if (/#access_token=(.*)$/.test(event.target.src)){
@@ -29,11 +47,5 @@ export var Page = React.createClass({
     return <div>Logged in</div>
   }
 
-})
+});
 
-
-if (typeof window !== 'undefined'){
-  window.DEBUG || (window.DEBUG = {})
-  window.DEBUG.putio = putio
-  window.DEBUG.jQuery = jQuery
-}

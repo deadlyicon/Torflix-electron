@@ -1,6 +1,6 @@
 import {Page} from './render/Page'
-
-setTimeout(()=>
-  ReactDOM.render(<Page />, document.body.children[0])
-);
-
+var page = new Page;
+page.renderOnDOMReady();
+window.DEBUG = {};
+window.DEBUG.page = page;
+window.DEBUG.$ = require('./bower_components/jquery/dist/jquery');

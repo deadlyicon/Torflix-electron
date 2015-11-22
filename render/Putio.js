@@ -34,7 +34,6 @@ export class Putio {
   }
 
   generateLoginURI(){
-    // "https://api.put.io/v2/oauth2/authenticate?client_id=#{client_id}&response_type=token&redirect_uri=#{redirect_uri}",
     return this.apiURI('/v2/oauth2/authenticate', {
       client_id:     CLIENT_ID,
       response_type: 'token',
@@ -43,7 +42,8 @@ export class Putio {
   }
 
   accountInfo(){
-    return this.request('get', this.apiURI('/v2/account/info')).then((response) => response.info );
+    return this.request('get', this.apiURI('/v2/account/info')).
+      then((response) => response.info );
   }
 
 }
