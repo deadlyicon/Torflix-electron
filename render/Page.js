@@ -17,6 +17,12 @@ import {TransfersPage} from './pages/TransfersPage'
  */
 export class Page extends ReactatronPage {
 
+  static get pages(){
+    return {
+      Transfers: TransfersPage,
+    }
+  }
+
   constructor(){
     super();
     this.putio = new Putio;
@@ -37,7 +43,7 @@ export class Page extends ReactatronPage {
       return <LoginPage src={this.putio.generateLoginURI()}/>
     }
 
-    return <TransfersPage />
+    return <TransfersPage {...this.state} />
   }
 
 }

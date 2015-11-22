@@ -1,16 +1,16 @@
 export function authenticationActions(page){
 
-  page.events.on('setPutioToken', (payload) => {
-    page.putio.token = payload.token;
-    // page.putio.loadUserData(()=>{
+  var setToken = function(token){
+    page.putio.token = token;
+    page.setState({putioToken: token});
+  }
 
-    // });
-    page.setState({putioToken: payload.token});
+  page.events.on('login', (payload) => {
+    setToken(payload.token);
   });
 
   page.events.on('logout', () => {
-    page.putio.token = null;
-    page.setState({putioToken: null});
+    setToken(null);
   });
 
 }

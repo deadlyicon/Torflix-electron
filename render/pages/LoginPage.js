@@ -8,9 +8,7 @@ export class LoginPage extends Component {
 
   onLoad(event){
     if (/#access_token=(.*)$/.test(event.target.src)){
-      // putio.setToken(RegExp.$1);
-      // this.forceUpdate();
-      this.emit('setPutioToken', {token:RegExp.$1});
+      this.emit('login', {token:RegExp.$1});
     }
   }
 
