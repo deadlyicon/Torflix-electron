@@ -6,8 +6,8 @@ export class Component extends React.Component {
     }
   }
 
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     if (this.init) this.init();
   }
 

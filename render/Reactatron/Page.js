@@ -7,7 +7,6 @@ export class ReactatronPage {
     this.state = this.getInitialState();
     this.events = new Events;
     // this.stats = {};
-
     // LocationPlugin(this);
     // this.router = new Router(this);
   }
@@ -34,6 +33,7 @@ export class ReactatronPage {
   }
 
 }
+
 class PageComponent extends React.Component {
 
   static get childContextTypes(){

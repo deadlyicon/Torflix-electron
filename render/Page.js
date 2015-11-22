@@ -5,7 +5,7 @@ import {Putio} from './Putio'
 import {authenticationActions} from './actions/authenticationActions'
 
 import {LoginPage} from './pages/LoginPage'
-import {HomePage} from './pages/HomePage'
+import {TransfersPage} from './pages/TransfersPage'
 
 /*
  * Page
@@ -37,7 +37,7 @@ export class Page extends ReactatronPage {
       return <LoginPage src={this.putio.generateLoginURI()}/>
     }
 
-    return <HomePage />
+    return <TransfersPage />
   }
 
 }
