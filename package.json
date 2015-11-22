@@ -1,11 +1,9 @@
 {
   "name": "Torflix",
   "version": "0.1.0",
-
   "main": "main.js",
   "scripts": {
-    "start": "express ",
-    "postinstall": "bin/postinstall"
+    "start": "electron main.js",
   },
   "dependencies": {
     "babel-loader": "^6.0.1",
