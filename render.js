@@ -1,4 +1,6 @@
-Page = require('./render/Page')
+var Page = require('./render/Page')
+
 setTimeout(()=>
-  ReactDOM.render(Page(), document.body.children[0])
+  ReactDOM.render(<Page />, document.body.children[0])
 );
+

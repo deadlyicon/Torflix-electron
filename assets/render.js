@@ -51,34 +51,41 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Page = __webpack_require__(3);
-	setTimeout(() => ReactDOM.render(Page(), document.body.children[0]));
+	'use strict';
+
+	var Page = __webpack_require__(2);
+
+	setTimeout(function () {
+	  return ReactDOM.render(React.createElement(Page, null), document.body.children[0]);
+	});
 
 /***/ },
-/* 2 */,
-/* 3 */
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Component = __webpack_require__(4);
+	'use strict';
 
-	parentTest = {
-
-	  render: function () {
-	    return React.DOM.div({}, 'hello world');
-	  }
-	};
+	var Component = __webpack_require__(3);
 
 	module.exports = Component('Page', {
 
-	  __proto__: parentTest
+	  render: function render() {
+	    return React.createElement(
+	      'div',
+	      null,
+	      'hello world'
+	    );
+	  }
 
 	});
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports) {
 
-	module.exports = Component = (displayName, spec) => {
+	"use strict";
+
+	module.exports = function (displayName, spec) {
 	  spec.displayName = displayName;
 	  return React.createFactory(React.createClass(spec));
 	};

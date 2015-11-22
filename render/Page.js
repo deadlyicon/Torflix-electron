@@ -1,15 +1,9 @@
-Component = require('./Component')
-
-parentTest = {
-
-
-  render: function(){
-    return React.DOM.div({}, 'hello world');
-  }
-}
+var Component = require('./Component')
 
 module.exports = Component('Page', {
 
-  __proto__: parentTest,
+  render: function(){
+    return <div>hello world</div>
+  }
 
 })
