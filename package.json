@@ -2,12 +2,8 @@
   "name": "Torflix",
   "version": "0.1.0",
   "main": "main.js",
-  "scripts": {
-    "start": "electron main.js",
-  },
   "dependencies": {
     "babel-loader": "^6.0.1",
-    "request": "^2.67.0",
     "webpack": "^1.12.3"
   },
   "devDependencies": {
