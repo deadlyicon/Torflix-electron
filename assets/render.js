@@ -57,15 +57,26 @@
 /***/ },
 /* 2 */,
 /* 3 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = React.createFactory(React.createClass({
+	Component = __webpack_require__(4);
+
+	module.exports = Component('Page', {
 
 	  render: function () {
 	    return React.DOM.div({}, 'hello world');
 	  }
 
-	}));
+	});
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = Component = (displayName, spec) => {
+	  spec.displayName = displayName;
+	  return React.createFactory(React.createClass(spec));
+	};
 
 /***/ }
 /******/ ]);
