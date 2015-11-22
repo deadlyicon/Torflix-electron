@@ -49,32 +49,19 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// var remote = require('remote');
-	// var React = remote.require('react');
-
-	var App = __webpack_require__(2);
-
-	setTimeout(function(){
-	  ReactDOM.render(App(), document.body.children[0]);
-	});
-
-
-/***/ },
-/* 2 */
 /***/ function(module, exports) {
 
-	module.exports = React.createFactory(React.createClass({
+	// // var remote = require('remote');
+	// // var React = remote.require('react');
 
+	// var App = require('./render/App');
+	// var Donkey = require('./render/Donkey');
 
-	  render: function(){
-	    return React.DOM.div({}, 'hello world');
-	  }
+	// setTimeout(()=>
+	//   ReactDOM.render(App(), document.body.children[0])
+	// );
 
-
-	}))
-
+	ass(() => x);
 
 /***/ }
 /******/ ]);

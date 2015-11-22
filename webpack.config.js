@@ -21,8 +21,13 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.css$/,    loader: 'style!css'},
-      { test: /\.coffee$/, loader: "coffee-loader" },
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel' // 'babel-loader' is also a legal name to reference
+      }
+      // { test: /\.css$/,    loader: 'style!css'},
+      // { test: /\.coffee$/, loader: "coffee-loader" },
     ]
   },
 
