@@ -117,7 +117,7 @@
 
 	var ENDPOINT = 'https://put.io';
 	var API_ENDPOINT = 'https://api.put.io/v2';
-	var CLIENT_ID = ({"GIT_PS1_SHOWDIRTYSTATE":"true","TERM_PROGRAM":"iTerm.app","SELENIUM":"true","TERM":"xterm-256color","SHELL":"/bin/bash","HISTSIZE":"100000","TMPDIR":"/var/folders/k4/yc4qn19968dbzspgrhdpgwwr0000gn/T/","Apple_PubSub_Socket_Render":"/private/tmp/com.apple.launchd.zIHTJY5yVK/Render","PROMPT_COLOR":"34","GIT_EDITOR":"subl -w","USER":"deadlyicon","COMMAND_MODE":"unix2003","SSH_AUTH_SOCK":"/private/tmp/com.apple.launchd.gzAO86ol9y/Listeners","__CF_USER_TEXT_ENCODING":"0x1F5:0x0:0x0","DOTFILES":"/Users/deadlyicon/.dotfiles","PATH":"./bin:./script:/Users/deadlyicon/.dotfiles/bin:/Users/deadlyicon/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin","PWD":"/Users/deadlyicon/Work/Torflix-electron","EDITOR":"subl","LANG":"en_US.UTF-8","ITERM_PROFILE":"Default","XPC_FLAGS":"0x0","PS1":"\\[\\033[4;1;${PROMPT_COLOR}m\\]\\w\\[\\033[0m\\]$(unalias git; __git_ps1 \" $(git config --get user.email) (%s)\") \\n☃ ","GIT_PS1_SHOWUNTRACKEDFILES":"true","HISTCONTROL":"erasedups","XPC_SERVICE_NAME":"0","SHLVL":"1","HOME":"/Users/deadlyicon","COLORFGBG":"7;0","ITERM_SESSION_ID":"w0t0p0","LOGNAME":"deadlyicon","PKG_CONFIG_PATH":"/usr/X11/lib/pkgconfig","SECURITYSESSIONID":"186a8","_":"./bin/webpack","OLDPWD":"/Users/deadlyicon"}).PUT_IO_CLIENT_ID;
+	var CLIENT_ID = ("2079");
 	var REDIRECT_URI = location.origin;
 
 	var Putio = exports.Putio = (function () {
