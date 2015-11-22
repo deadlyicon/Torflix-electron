@@ -4,6 +4,7 @@ import {Putio} from './Putio'
 
 import {authenticationActions} from './actions/authenticationActions'
 
+import {PageNotFoundPage} from './pages/PageNotFoundPage'
 import {LoginPage} from './pages/LoginPage'
 import {TransfersPage} from './pages/TransfersPage'
 
@@ -31,7 +32,7 @@ export class App extends ReactatronApp {
 
   getInitialState(){
     return {
-      page: 'Home',
+      page: 'Transfers',
       putioToken: '',
     }
   }
@@ -43,7 +44,8 @@ export class App extends ReactatronApp {
       return <LoginPage src={this.putio.generateLoginURI()}/>
     }
 
-    return <TransfersPage {...this.state} />
+    var page = App.pages[this.state.page] || PageNotFoundPage
+    return React.createElement(page, this.state);
   }
 
 }
