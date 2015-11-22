@@ -1,7 +1,6 @@
-// require('./environment');
+require('./environment');
 var Webpack = require('webpack');
 var path = require('path');
-
 
 var processEnv = {};
 for (var key in process.env){
