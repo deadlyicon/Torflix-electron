@@ -4,7 +4,7 @@ import {LocationPlugin} from './LocationPlugin'
 export class ReactatronApp {
 
   constructor(){
-    this.state = this.getInitialState();
+    this.state = {};
     this.events = new Events;
     this.on = this.events.on.bind(this.events)
   }
@@ -13,10 +13,6 @@ export class ReactatronApp {
     console.info('emit', event, payload);
     this.events.emit(event, payload);
     return this;
-  }
-
-  getInitialState(){
-    return {};
   }
 
   start(){
@@ -44,8 +40,12 @@ export class ReactatronApp {
     return this.pages[this.state.page] || this.pages.NotFound;
   }
 
-  render(){
+  renderPageComponent(){
     return React.createElement(this.pageComponent, this.state);
+  }
+
+  render(){
+    return this.renderPageComponent();
   }
 
 }

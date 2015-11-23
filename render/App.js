@@ -14,39 +14,75 @@ import {FilesPage} from './pages/FilesPage'
 
 
 
- export class App extends ReactatronApp {
+export var App = new ReactatronApp
 
-  constructor(){
-    super();
-    this.putio = new Putio;
-    authenticationActions(this);
-  }
+App.state.page = 'Transfers';
 
-  get pages(){
-    return {
-      Transfers: TransfersPage,
-      Files:     FilesPage,
-      NotFound:  PageNotFoundPage,
-    }
-  }
-
-  getInitialState(){
-    return {
-      page: 'Transfers',
-      putioToken: null,
-    }
-  }
-
-  render(){
-    console.log('rendering', this.state);
-    if (!this.state.putioToken){
-      return <LoginPage src={this.putio.generateLoginURI()}/>
-    }else{
-      return super.render()
-    }
-  }
-
+App.pages = {
+  Transfers: TransfersPage,
+  Files:     FilesPage,
+  NotFound:  PageNotFoundPage,
 }
+
+App.render = function(){
+  console.log('rendering', this.state);
+  if (!this.state.putioToken){
+    return <LoginPage src={this.putio.generateLoginURI()}/>
+  }else{
+    return this.renderPageComponent()
+  }
+}
+
+App.putio = new Putio;
+
+App.setPutioToken = function(token){
+  App.putio.token = token;
+  App.setState({putioToken: token});
+}
+
+App.on('login', function(payload){
+  App.setPutioToken(payload.token);
+});
+
+App.on('logout', function(){
+  App.setPutioToken(null);
+});
+
+
+App.on('pageChange', function(payload){
+  var page = payload.page;
+  console.info('pageChange', page);
+});
+
+
+
+//   constructor(){
+//     super();
+//     this.putio = new Putio;
+//     authenticationActions(this);
+//   }
+
+//   get pages(){
+//     return
+//   }
+
+//   getInitialState(){
+//     return {
+//       page: 'Transfers',
+//       putioToken: null,
+//     }
+//   }
+
+//   render(){
+//     console.log('rendering', this.state);
+//     if (!this.state.putioToken){
+//       return <LoginPage src={this.putio.generateLoginURI()}/>
+//     }else{
+//       return super.render()
+//     }
+//   }
+
+// }
 
 
 // /*
