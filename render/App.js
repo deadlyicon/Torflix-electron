@@ -21,6 +21,7 @@ export class App extends ReactatronApp {
   static get pages(){
     return {
       Transfers: TransfersPage,
+      Files:     FilesPage,
     }
   }
 
@@ -44,7 +45,8 @@ export class App extends ReactatronApp {
       return <LoginPage src={this.putio.generateLoginURI()}/>
     }
 
-    var page = App.pages[this.state.page] || PageNotFoundPage
+    var pageName = this.state.page;
+    var page = App.pages[pageName] || PageNotFoundPage({pageName:pageName})
     return React.createElement(page, this.state);
   }
 
