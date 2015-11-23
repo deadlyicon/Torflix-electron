@@ -6,15 +6,23 @@ export class ReactatronApp {
   constructor(){
     this.state = this.getInitialState();
     this.events = new Events;
-    // this.stats = {};
-    // LocationPlugin(this);
-    // this.router = new Router(this);
+    this.on = this.events.on.bind(this.events)
+  }
+
+  emit(event, payload){
+    console.info('emit', event, payload);
+    this.events.emit(event, payload);
+    return this;
+  }
+
+  getInitialState(){
+    return {};
   }
 
   start(){
     var props = {
       state:  this.state,
-      emit:   this.events.emit.bind(this.events),
+      emit:   this.emit.bind(this),
       render: this.render.bind(this),
     };
     var instance = React.createElement(PageComponent, props);
@@ -30,6 +38,14 @@ export class ReactatronApp {
       this.component.setState(this.state);
     }
     return this;
+  }
+
+  get pageComponent(){
+    return this.pages[this.state.page] || this.pages.NotFound;
+  }
+
+  render(){
+    return React.createElement(this.pageComponent, this.state);
   }
 
 }

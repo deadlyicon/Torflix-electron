@@ -1,15 +1,15 @@
-export function authenticationActions(page){
+export function authenticationActions(App){
 
   var setToken = function(token){
-    page.putio.token = token;
-    page.setState({putioToken: token});
+    App.putio.token = token;
+    App.setState({putioToken: token});
   }
 
-  page.events.on('login', (payload) => {
+  App.on('login', (payload) => {
     setToken(payload.token);
   });
 
-  page.events.on('logout', () => {
+  App.on('logout', () => {
     setToken(null);
   });
 

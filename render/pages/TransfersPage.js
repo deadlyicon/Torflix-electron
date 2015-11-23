@@ -1,4 +1,5 @@
 import {Component} from '../Component'
+import {Layout} from '../components/Layout'
 
 export class TransfersPage extends Component {
 
@@ -9,7 +10,7 @@ export class TransfersPage extends Component {
   render(){
     var transfers = this.props.transfers;
     if (!transfers){
-      return <div>Loading transfers…</div>
+      return <Layout>Loading transfers…</Layout>
     }
 
 
@@ -19,10 +20,10 @@ export class TransfersPage extends Component {
     // I want to avoid ComponentDidMount etc.
     // Maybe I want Page object that act like controllers
 
-    return <div>
+    return <Layout>
       <h1>Transfers Page</h1>
       <div>{JSON.stringify(transfers)}</div>
-    </div>
+    </Layout>
   }
 
 }
