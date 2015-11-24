@@ -1,3 +1,5 @@
+React = require 'react'
+DOM = require 'react-dom'
 component = require '../Reactatron/component'
 
 

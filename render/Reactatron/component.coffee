@@ -1,3 +1,5 @@
+React = require 'react'
+
 module.exports = createReactatronComponent = (displayName, spec) ->
   spec.displayName = displayName
   reactClass = React.createClass(spec)

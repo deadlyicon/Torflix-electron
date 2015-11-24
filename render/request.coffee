@@ -1,4 +1,5 @@
 require 'shouldhave/Object.assign'
+jQuery = require '../bower_components/jquery/dist/jquery'
 
 request = (method, url, data, options={}) ->
 

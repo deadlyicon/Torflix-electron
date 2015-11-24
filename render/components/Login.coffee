@@ -1,4 +1,6 @@
-component = require '../Reactatron/component'
+React = require 'react'
+ReactDOM = require 'react-dom'
+component = require '../component'
 
 module.exports = component 'Login',
 
@@ -6,7 +8,7 @@ module.exports = component 'Login',
     if /#access_token=(.*)$/.test(event.target.src)
       @emit 'login', token: RegExp.$1
 
-  componentDidMount: () ->
+  componentDidMount: ->
     webview = ReactDOM.findDOMNode(this)
     webview.addEventListener('did-finish-load', @onLoad)
 

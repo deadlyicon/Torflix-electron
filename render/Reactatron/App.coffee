@@ -1,3 +1,5 @@
+React = require 'react'
+ReactDOM = require 'react-dom'
 Events = require './Events'
 component = require './component'
 
