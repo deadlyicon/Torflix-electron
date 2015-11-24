@@ -13,8 +13,12 @@ export class GoToPageButton extends Component {
   }
 
   render(){
+    var children = this.props.children;
+    if (!children || children.length === 0){
+      children = this.props.page;
+    }
     return <button onClick={this.onClick.bind(this)}>
-      {this.props.children}
+      {children}
     </button>
   }
 }
