@@ -37,4 +37,15 @@ export class Putio {
       then((response) => response.info );
   }
 
+  transfers(){
+    return this.request('get', this.apiURI('/v2/transfers/list')).
+      then((response) => response.transfers );
+  }
+
+  deleteTransfer(id){
+    return this.request('post', '/v2/transfers/cancel', {transfer_ids: id});
+  }
+
+
+
 }

@@ -36,18 +36,6 @@ export class ReactatronApp {
     return this;
   }
 
-  get pageComponent(){
-    return this.pages[this.state.page] || this.pages.NotFound;
-  }
-
-  renderPageComponent(){
-    return React.createElement(this.pageComponent, this.state);
-  }
-
-  render(){
-    return this.renderPageComponent();
-  }
-
 }
 
 class PageComponent extends React.Component {
