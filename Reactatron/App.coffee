@@ -16,7 +16,7 @@ module.exports = class ReactatronApp
     @events.emit(event, payload)
     return @
 
-  start : ->
+  start: ->
     props =
       state:  @state
       emit:   @emit.bind(this)
@@ -34,15 +34,16 @@ module.exports = class ReactatronApp
     return @;
 
 
-PageComponent = component 'PageComponent',
+PageComponent = React.createFactory React.createClass
+  displayName: 'PageComponent'
 
   childContextTypes:
     emit: React.PropTypes.func
 
   getChildContext: ->
-    emit: this.props.emit
+    emit: @props.emit
 
   render: ->
-    this.props.render()
+    @props.render()
 
 

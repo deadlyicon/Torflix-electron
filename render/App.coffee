@@ -1,9 +1,9 @@
-ReactatronApp = require './Reactatron/App'
+Reactatron = require '../Reactatron'
 Putio = require './Putio'
 Login = require './components/Login'
 Dashboard = require './components/Dashboard'
 
-module.exports = App = new ReactatronApp
+module.exports = App = new Reactatron.App
 
 App.state.putioToken = null
 App.state.accountInfo = null

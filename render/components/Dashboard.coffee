@@ -1,11 +1,8 @@
-React = require 'react'
-DOM = require 'react-dom'
-component = require '../Reactatron/component'
+Reactatron = require '../../Reactatron'
 
+{div, h1} = Reactatron.DOM
 
-{div, h1} = React.DOM
-
-module.exports = component 'Dashboard',
+module.exports = Reactatron.component 'Dashboard',
 
   render: ->
     div className: 'Dashboard',
@@ -13,7 +10,7 @@ module.exports = component 'Dashboard',
       AccountInfo(this.props.accountInfo)
       Transfers(this.props.transfers)
 
-AccountInfo = component 'AccountInfo',
+AccountInfo = Reactatron.component 'AccountInfo',
 
   render: ->
 
@@ -28,7 +25,7 @@ AccountInfo = component 'AccountInfo',
         this.props.disk.size
 
 
-Transfers = component 'Transfers',
+Transfers = Reactatron.component 'Transfers',
 
   render: ->
     div className: 'Dashboard-Transfers',

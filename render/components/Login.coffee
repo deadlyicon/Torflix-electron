@@ -1,16 +1,14 @@
-React = require 'react'
-ReactDOM = require 'react-dom'
-component = require '../component'
+Reactatron = require '../../Reactatron'
 
-module.exports = component 'Login',
+module.exports = Reactatron.component 'Login',
 
   onLoad: (event) ->
     if /#access_token=(.*)$/.test(event.target.src)
       @emit 'login', token: RegExp.$1
 
   componentDidMount: ->
-    webview = ReactDOM.findDOMNode(this)
+    webview = Reactatron.findDOMNode(this)
     webview.addEventListener('did-finish-load', @onLoad)
 
   render: ->
-    React.createElement('webview', className: 'putio-login', src: this.props.src)
+    Reactatron.createElement('webview', className: 'putio-login', src: this.props.src)
