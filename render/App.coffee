@@ -5,7 +5,7 @@ Dashboard = require './components/Dashboard'
 
 module.exports = App = new Reactatron.App
 
-App.state.putioToken = null
+App.state.putioToken = localStorage.putioToken
 App.state.accountInfo = null
 App.state.transfers = null
 App.state.files = null
@@ -18,18 +18,27 @@ App.render = ->
     Login(src: App.putio.generateLoginURI())
 
 App.putio = new Putio
+App.putio.token = App.state.putioToken
 
-
-App.on 'login', (payload) ->
-  token = payload.token
-  App.putio.token = token
-  App.setState putioToken: token
-
+# we need to figure out where to trigger this
+App.loadStuff = ->
   App.putio.accountInfo().then (accountInfo) ->
     App.setState accountInfo: accountInfo
 
   App.putio.transfers().then (transfers) ->
     App.setState transfers: transfers
+
+
+App.on 'start', ->
+  App.loadStuff() if App.state.putioToken
+
+
+App.on 'login', (payload) ->
+  token = payload.token
+  localStorage.putioToken = token
+  App.putio.token = token
+  App.setState putioToken: token
+  App.loadStuff();
 
 
 App.on 'logout', ->

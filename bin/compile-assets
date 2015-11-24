@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
 var cp = require('child_process');
+var path = require('path');
 
 sassOptions = [
   '-w',
   '--output-style', 'expanded',
-  '--include-path', __dirname+'../style',
+  '--include-path', path.resolve(__dirname+'/../style'),
   './style.sass', './assets/style.css',
 ]
 

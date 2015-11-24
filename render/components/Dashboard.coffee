@@ -1,12 +1,12 @@
 Reactatron = require '../../Reactatron'
-
+Navbar = require './Navbar'
 {div, h1} = Reactatron.DOM
 
 module.exports = Reactatron.component 'Dashboard',
 
   render: ->
     div className: 'Dashboard',
-      h1(null, 'Torflix')
+      Navbar()
       AccountInfo(this.props.accountInfo)
       Transfers(transfers: this.props.transfers)
 
@@ -38,7 +38,9 @@ Transfers = Reactatron.component 'Dashboard-Transfers',
 
     div className: 'Dashboard-Transfers',
       div null, 'Transfers'
-      @props.transfers.map(Transfer)
+      @props.transfers.map (transfer) ->
+        Transfer(Object.assign({key: transfer.id}, transfer))
+
 
 Transfer = Reactatron.component 'Dashboard-Transfer',
 

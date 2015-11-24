@@ -19,6 +19,7 @@ module.exports = class ReactatronApp
     return @
 
   start: ->
+    @emit 'start'
     instance = PageComponent
       state:  @state
       emit:   @emit
