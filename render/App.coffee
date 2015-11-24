@@ -1,5 +1,7 @@
 ReactatronApp = require './Reactatron/App'
 Putio = require './Putio'
+Login = require './components/Login'
+Dashboard = require './components/Dashboard'
 
 module.exports = App = new ReactatronApp
 
@@ -13,7 +15,7 @@ App.render = ->
   if App.state.putioToken
     Dashboard(App.state)
   else
-    LoginPage(src: App.putio.generateLoginURI())
+    Login(src: App.putio.generateLoginURI())
 
 App.putio = new Putio
 

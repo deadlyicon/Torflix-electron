@@ -1,6 +1,7 @@
 Events = require './Events'
+component = require './component'
 
-class ReactatronApp
+module.exports = class ReactatronApp
 
   constructor: ->
     @state = {}
@@ -31,7 +32,7 @@ class ReactatronApp
     return @;
 
 
-class PageComponent extends React.Component
+PageComponent = component 'PageComponent',
 
   childContextTypes:
     emit: React.PropTypes.func

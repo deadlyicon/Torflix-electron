@@ -1,10 +1,10 @@
 require 'shouldhave/Object.bindAll'
 
-URI = require 'URIjs'
+URI = require 'urijs'
 request = require './request'
 
 CLIENT_ID = process.env.PUT_IO_CLIENT_ID
-REDIRECT_URI = location.origin
+REDIRECT_URI = process.env.PUT_IO_REDIRECT_URI
 
 class Putio
 
