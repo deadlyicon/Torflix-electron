@@ -1,21 +1,18 @@
-export class Component extends React.Component {
-
-  static get contextTypes() {
-    return {
-      emit: React.PropTypes.func
-    }
-  }
+class ReactatronComponent extends React.Component {
 
   constructor(props){
-    super(props);
-    if (this.init) this.init();
+    super(props)
+    @init?()
   }
 
-  emit(...args){
-    return this.context.emit(...args);
-  }
+  contextTypes:
+    emit: React.PropTypes.func
 
-}
+  emit: (args...) ->
+    @context.emit(args...)
+
+
+module.exports = ReactatronComponent;
 
 
 // var bindAll = (object) => {

@@ -20,18 +20,12 @@ module.exports = {
 
   module: {
     loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel?presets[]=react,presets[]=es2015'
-      }
-      // { test: /\.css$/,    loader: 'style!css'},
-      // { test: /\.coffee$/, loader: "coffee-loader" },
+      { test: /\.coffee$/, loader: "coffee-loader" }
     ]
   },
 
   resolve: {
-    extensions: ["", ".coffee", ".js", ".css"]
+    extensions: ["", ".coffee", ".js"]
   },
 
   plugins: [
@@ -40,7 +34,3 @@ module.exports = {
     }),
   ]
 };
-
-
-
-// process.env.NODE_ENV)
