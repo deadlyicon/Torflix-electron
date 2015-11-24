@@ -1,3 +1,5 @@
+require 'shouldhave/Object.bindAll'
+
 React = require 'react'
 ReactDOM = require 'react-dom'
 Events = require './Events'
@@ -6,10 +8,10 @@ component = require './component'
 module.exports = class ReactatronApp
 
   constructor: ->
+    Object.bindAll(this)
     @state = {}
     @events = new Events
     @on = this.events.on.bind(this.events)
-    # Object.bindAll(this)
 
   emit: (event, payload) ->
     console.info('emit', event, payload)
@@ -19,8 +21,8 @@ module.exports = class ReactatronApp
   start: ->
     instance = PageComponent
       state:  @state
-      emit:   @emit.bind(this)
-      render: @render.bind(this)
+      emit:   @emit
+      render: @render
 
     @component = ReactDOM.render(instance, @element)
     return @

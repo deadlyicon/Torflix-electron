@@ -9,6 +9,7 @@
     "dotenv": "^1.2.0",
     "electron-packager": "^4.1.2",
     "electron-prebuilt": "^0.27.2",
+    "node-sass": "^3.4.2",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "urijs": "^1.17.0",
