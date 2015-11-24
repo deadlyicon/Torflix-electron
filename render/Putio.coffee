@@ -14,18 +14,15 @@ class Putio
   constructor: ->
     Object.bindAll(this)
 
-  setToken: (token) ->
-    @TOKEN = token
-
   URI: (path, query={}) ->
-    query.oauth_token ||= @TOKEN # ???
+    query.oauth_token ||= @token # ???
     URI(@ENDPOINT)
       .query(query)
       .path(path)
       .toString()
 
   apiURI: (path, query={}) ->
-    query.oauth_token ||= @TOKEN
+    query.oauth_token ||= @token
     URI(@API_ENDPOINT)
       .query(query)
       .path(path)

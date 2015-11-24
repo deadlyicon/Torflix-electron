@@ -17,12 +17,11 @@ module.exports = class ReactatronApp
     return @
 
   start: ->
-    props =
+    instance = PageComponent
       state:  @state
       emit:   @emit.bind(this)
       render: @render.bind(this)
 
-    instance = React.createElement(PageComponent, props)
     @component = ReactDOM.render(instance, @element)
     return @
 
