@@ -43,6 +43,7 @@ class Putio
   # @param {object} element
   ###
   request: (method, path, params) ->
+    throw new Error('put.io token required') unless @token?
     request(method, @apiURI(path), params)
 
 
