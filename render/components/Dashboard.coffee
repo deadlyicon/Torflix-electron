@@ -1,29 +1,17 @@
 Reactatron = require '../../Reactatron'
 Navbar = require './Navbar'
+Columns = require './Columns'
+Rows = require './Rows'
 {div, h1} = Reactatron.DOM
 
 module.exports = Reactatron.component 'Dashboard',
 
   render: ->
-    div className: 'Dashboard',
-      Navbar()
-      AccountInfo(this.props.accountInfo)
+    Rows className: 'Dashboard layer',
+      Navbar(accountInfo: this.props.accountInfo)
       Transfers(transfers: this.props.transfers)
 
 
-AccountInfo = Reactatron.component 'Dashboard-AccountInfo',
-
-  render: ->
-
-    if !this.props.avatar_url
-      return div(null, 'Loading...')
-
-    div className: 'Dashboard-AccountInfo',
-      div(null, this.props.username)
-      div
-        this.props.disk.used
-        ' / '
-        this.props.disk.size
 
 
 

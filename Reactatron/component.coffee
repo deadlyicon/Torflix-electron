@@ -1,3 +1,4 @@
+require 'shouldhave/Object.clone'
 React = require 'react'
 
 module.exports = createReactatronComponent = (displayName, spec) ->
@@ -14,3 +15,6 @@ AppMixin =
 
   emit: (args...) ->
     @context.emit(args...)
+
+  cloneProps: ->
+    Object.clone(@props)

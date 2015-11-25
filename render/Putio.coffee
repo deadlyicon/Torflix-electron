@@ -49,6 +49,9 @@ class Putio
 
 
 
+  logout: ->
+    request('post', 'https://put.io/logout')
+
 
   accountInfo: ->
     @request('get', '/v2/account/info').then(pluck('info'))

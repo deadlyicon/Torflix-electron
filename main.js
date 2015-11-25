@@ -1,5 +1,6 @@
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
+var mainWindow;
 
 // BrowserWindow.addDevToolsExtension('/some-directory/react-devtools/shells/chrome')
 
@@ -15,14 +16,35 @@ app.on('window-all-closed', function() {
   // }
 });
 
+// delete all cookies
+deleteAllCookies = function(){
+  mainWindow.webContents.session.cookies.get({}, function(error, cookies) {
+    if (error) throw error;
+    console.log(cookies);
+    cookies.forEach(function(cookie){
+      var url = "http" + (cookie.secure ? "s" : "") + "://" + cookie.domain + cookie.path;
+      mainWindow.webContents.session.cookies.remove({url: url, name: cookie.name}, function(error) {
+        if (error) throw error;
+        console.log('cookie delete : ', cookie);
+      });
+    });
+  });
+};
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
+  mainWindow.on('logout', function(){
+    console.log('logout');
+    deleteAllCookies();
+  });
+
+
   // and load the index.html of the app.
-  mainWindow.loadUrl('file://' + __dirname + '/render.html');
+  mainWindow.loadURL('file://' + __dirname + '/render.html');
 
   // Open the DevTools.
   mainWindow.openDevTools();

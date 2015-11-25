@@ -42,6 +42,7 @@ App.on 'login', (payload) ->
 
 
 App.on 'logout', ->
-  App.putio.token = null
-  App.setState putioToken: null
+  App.putio.logout().then ->
+    App.putio.token = null
+    App.setState putioToken: null
 
