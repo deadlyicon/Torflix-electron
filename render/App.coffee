@@ -3,6 +3,9 @@ Putio = require './Putio'
 Login = require './components/Login'
 Dashboard = require './components/Dashboard'
 
+# remote = require('electron').remote;
+# mainWindow.webContents.session.cookies.get({}, function(error, cookies) { debugger; });
+
 module.exports = App = new Reactatron.App
 
 App.state.putioToken = localStorage.putioToken
