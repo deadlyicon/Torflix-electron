@@ -18,39 +18,6 @@ App.render = ->
   if App.state.putioToken
     Dashboard(App.state)
   else
-    Login(src: App.putio.generateLoginURI())
+    Login(src: App.loginURI())
 
-
-App.putio = new Putio
-App.putio.token = App.state.putioToken
-
-# we need to figure out where to trigger this
-App.loadStuff = ->
-  App.putio.accountInfo().then (accountInfo) ->
-    App.setState accountInfo: accountInfo
-
-  # App.putio.transfers().then (transfers) ->
-  #   App.setState transfers: transfers
-
-  # # App.putio.directoryContents(0).then (response) ->
-  # App.putio.allFiles().then (files) ->
-  #   App.setState files: files
-
-
-App.on 'start', ->
-  App.loadStuff() if App.state.putioToken
-
-
-App.on 'login', (payload) ->
-  token = payload.token
-  localStorage.putioToken = token
-  App.putio.token = token
-  App.setState putioToken: token
-  App.loadStuff();
-
-
-App.on 'logout', ->
-  App.putio.logout().then ->
-    App.putio.token = null
-    App.setState putioToken: null
-
+require('./App/putio')(App)
