@@ -6,6 +6,11 @@ Rows = require './Rows'
 
 module.exports = Reactatron.component 'Dashboard',
 
+  propTypes:
+    accountInfo: Reactatron.PropTypes.any
+    transfers:   Reactatron.PropTypes.any
+    files:       Reactatron.PropTypes.any
+
   getInitialState: ->
     page: 'Transfers' # || 'Files'
 
@@ -64,15 +69,19 @@ Transfer = Reactatron.component 'Dashboard-Transfer',
 Files = Reactatron.component 'Dashboard-Files',
 
   propTypes:
-    files: Reactatron.PropTypes.array
+    files: Reactatron.PropTypes.object
 
   render: ->
-    if !this.props.transfers
+    if !this.props.files
       return div(null, 'Loading...')
 
+    files = []
+    for id, file of @props.files
+      files.push file
+
     div className: 'Dashboard-Files',
-      @props.files.map (file) ->
-        file(Object.assign({key: file.id}, file))
+      files.map (file) ->
+        File(Object.assign({key: file.id}, file))
 
 
 File = Reactatron.component 'Dashboard-File',

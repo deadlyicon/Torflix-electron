@@ -32,8 +32,8 @@ module.exports = class ReactatronApp
     console.info('App.setState', update)
     Object.assign(this.state, update)
     # TODO we may want to implement a delay here
-    @component?.setState(@state)
-    return @;
+    @component?.forceUpdate()
+    return @
 
 
 PageComponent = React.createFactory React.createClass

@@ -109,18 +109,18 @@ class Putio
       response
 
 
-  allFiles: (id=0)->
-    console.log('allFiles', id);
-    files = {}
-    @directoryContents(id).then (response) =>
-      promises = []
-      for file in response.files
-        files[file.id] = file
-        if file.isDirectory
-          promises.push @allFiles(file.id)
-      return files if promises.length == 0
-      Promise.all(promises).then (children) ->
-        Object.assign(files, children...)
+  # allFiles: (id=0)->
+  #   console.log('allFiles', id);
+  #   files = {}
+  #   @directoryContents(id).then (response) =>
+  #     promises = []
+  #     for file in response.files
+  #       files[file.id] = file
+  #       # if file.isDirectory
+  #         # promises.push @allFiles(file.id)
+  #     return files if promises.length == 0
+  #     Promise.all(promises).then (children) ->
+  #       Object.assign(files, children...)
 
 
 

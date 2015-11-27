@@ -9,44 +9,15 @@ require('crash-reporter').start();
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function() {
-  // // On OS X it is common for applications and their menu bar
-  // // to stay active until the user quits explicitly with Cmd + Q
-  // if (process.platform != 'darwin') {
-  //   app.quit();
-  // }
   app.quit();
 });
 
-// // delete all cookies
-// deleteAllCookies = function(){
-//   mainWindow.webContents.session.cookies.get({}, function(error, cookies) {
-//     if (error) throw error;
-//     console.log(cookies);
-//     cookies.forEach(function(cookie){
-//       var url = "http" + (cookie.secure ? "s" : "") + "://" + cookie.domain + cookie.path;
-//       mainWindow.webContents.session.cookies.remove({url: url, name: cookie.name}, function(error) {
-//         if (error) throw error;
-//         console.log('cookie delete : ', cookie);
-//       });
-//     });
-//   });
-// };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600});
-
-  mainWindow.on('app-command', function(event, cmd) {
-    console.log('app-command', cmd);
-  })
-
-  // mainWindow.on('logout', function(){
-  //   console.log('logout');
-  //   deleteAllCookies();
-  // });
-
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/render.html');
