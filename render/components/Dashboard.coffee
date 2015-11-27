@@ -1,4 +1,4 @@
-Reactatron = require '../../Reactatron'
+Reactatron = require 'Reactatron'
 Navbar = require './Navbar'
 Columns = require './Columns'
 Rows = require './Rows'

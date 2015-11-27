@@ -1,5 +1,5 @@
-Reactatron = require '../Reactatron'
-Putio = require './Putio'
+Reactatron = require 'Reactatron'
+Putio = require 'Putio'
 Login = require './components/Login'
 Dashboard = require './components/Dashboard'
 

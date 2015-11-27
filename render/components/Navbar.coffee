@@ -1,4 +1,4 @@
-Reactatron = require '../../Reactatron'
+Reactatron = require 'Reactatron'
 Columns = require './Columns'
 Spacer = require './Spacer'
 LogoutButton = require './LogoutButton'

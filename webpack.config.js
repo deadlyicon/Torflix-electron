@@ -25,6 +25,8 @@ module.exports = {
   },
 
   resolve: {
+    // root: __dirname,
+    modulesDirectories: ['node_modules', 'vendor'],
     extensions: ["", ".coffee", ".js"]
   },
 

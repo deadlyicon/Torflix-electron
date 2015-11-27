@@ -1,4 +1,4 @@
-Reactatron = require '../../Reactatron'
+Reactatron = require 'Reactatron'
 
 module.exports = Reactatron.component 'Button',
 
