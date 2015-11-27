@@ -2,8 +2,9 @@ Reactatron = require '../../Reactatron'
 Columns = require './Columns'
 Spacer = require './Spacer'
 LogoutButton = require './LogoutButton'
+formatBytes = require '../formatBytes'
 
-{div, button} = Reactatron.DOM
+{div, button, span} = Reactatron.DOM
 
 module.exports = Reactatron.component 'Navbar',
 
@@ -30,6 +31,11 @@ AccountInfo = Reactatron.component 'Navbar-AccountInfo',
       return div(null, 'Loading...')
 
     div className: 'Navbar-AccountInfo',
-      this.props.disk.used
+      DiskSize(size: @props.disk.used)
       ' / '
-      this.props.disk.size
+      DiskSize(size: @props.disk.size)
+
+DiskSize = Reactatron.component 'Navbar-DiskSize',
+
+  render: ->
+    span {}, formatBytes(@props.size, 2)

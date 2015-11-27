@@ -11,4 +11,4 @@ module.exports = Reactatron.component 'Login',
     webview.addEventListener('did-finish-load', @onLoad)
 
   render: ->
-    Reactatron.createElement('webview', className: 'putio-login', src: this.props.src)
+    Reactatron.createElement('webview', className: 'putio-login layer', src: this.props.src)

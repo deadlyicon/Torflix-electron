@@ -2,6 +2,8 @@ Reactatron = require '../../Reactatron'
 Navbar = require './Navbar'
 Columns = require './Columns'
 Rows = require './Rows'
+formatBytes = require '../formatBytes'
+
 {div, h1} = Reactatron.DOM
 
 module.exports = Reactatron.component 'Dashboard',
@@ -12,8 +14,7 @@ module.exports = Reactatron.component 'Dashboard',
     files:       Reactatron.PropTypes.any
 
   getInitialState: ->
-    # page: 'Transfers' # || 'Files'
-    page: 'Files'
+    page: 'Transfers' # || 'Files'
 
   onPageChange: (page) ->
     @setState page: page
@@ -64,8 +65,7 @@ Transfer = Reactatron.component 'Dashboard-Transfer',
   render: ->
     div className: 'Dashboard-Transfer',
       div null, @props.name
-
-
+      div null, formatBytes(@props.size)
 
 Files = Reactatron.component 'Dashboard-Files',
 
