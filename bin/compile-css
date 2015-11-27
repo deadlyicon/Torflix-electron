@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+./bin/sass $* --output-style expanded --include-path ./style ./style.sass ./assets/style.css
