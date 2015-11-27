@@ -12,9 +12,9 @@ module.exports = Reactatron.component 'Navbar',
 
   render: ->
     Columns className: 'Navbar',
-      button onClick: @props.onPageChange.bind(null, 'transfers'), 'Transfers'
-      button onClick: @props.onPageChange.bind(null, 'files'),     'Files'
-      button onClick: @props.onPageChange.bind(null, 'search'),    'Search'
+      button onClick: @props.onPageChange.bind(null, 'Transfers'), 'Transfers'
+      button onClick: @props.onPageChange.bind(null, 'Files'),     'Files'
+      button onClick: @props.onPageChange.bind(null, 'Search'),    'Search'
       Spacer()
       AccountInfo(@props.accountInfo)
       LogoutButton null, 'Logout'

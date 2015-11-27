@@ -7,8 +7,12 @@ sassOptions = [
   '-w',
   '--output-style', 'expanded',
   '--include-path', path.resolve(__dirname+'/../style'),
-  './style.sass', './assets/style.css',
+  './style.sass', path.resolve(__dirname+'/../assets/style.css'),
 ]
+
+var css = cp.spawn(__dirname+'/sass', sassOptions.slice(1), {
+  stdio: ['ignore', process.stdout, process.stderr]
+});
 
 var css = cp.spawn(__dirname+'/sass', sassOptions, {
   stdio: ['ignore', process.stdout, process.stderr]

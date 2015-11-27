@@ -108,6 +108,24 @@ class Putio
     @request('post', '/v2/files/delete', file_ids: id).then (response) =>
       response
 
+
+  allFiles: (id=0)->
+    console.log('allFiles', id);
+    files = {}
+    @directoryContents(id).then (response) =>
+      promises = []
+      for file in response.files
+        files[file.id] = file
+        if file.isDirectory
+          promises.push @allFiles(file.id)
+      return files if promises.length == 0
+      Promise.all(promises).then (children) ->
+        Object.assign(files, children...)
+
+
+
+
+
   IS_VIDEO_REGEXP = /\.(mkv|mp4|avi)$/
   amendFile: (file) ->
     file.loadedAt    = Date.now()

@@ -31,6 +31,9 @@ App.loadStuff = ->
   App.putio.transfers().then (transfers) ->
     App.setState transfers: transfers
 
+  App.putio.allFiles().then (files) ->
+    App.setState files: files
+
 
 App.on 'start', ->
   App.loadStuff() if App.state.putioToken

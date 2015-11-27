@@ -61,6 +61,31 @@ Transfer = Reactatron.component 'Dashboard-Transfer',
 
 
 
+Files = Reactatron.component 'Dashboard-Files',
+
+  propTypes:
+    files: Reactatron.PropTypes.array
+
+  render: ->
+    if !this.props.transfers
+      return div(null, 'Loading...')
+
+    div className: 'Dashboard-Files',
+      @props.files.map (file) ->
+        file(Object.assign({key: file.id}, file))
+
+
+File = Reactatron.component 'Dashboard-File',
+
+  propTypes:
+    name: Reactatron.PropTypes.string.isRequired
+
+  render: ->
+    div className: 'Dashboard-File',
+      div null, @props.name
+
+
+
 # availability: null
 # callback_url: null
 # client_ip: null
