@@ -1,7 +1,7 @@
 Reactatron = require 'Reactatron'
 formatBytes = require '../formatBytes'
 
-{div} = Reactatron.DOM
+{div, progress} = Reactatron.DOM
 
 module.exports = Reactatron.component 'TransfersList',
 
@@ -9,12 +9,12 @@ module.exports = Reactatron.component 'TransfersList',
     transfers: Reactatron.PropTypes.array
 
   render: ->
-    if !this.props.transfers
-      return div(null, 'Loading...')
-
-    div className: 'TransfersList',
-      @props.transfers.map (transfer) ->
-        Transfer(Object.assign({key: transfer.id}, transfer))
+    div className: 'TransfersList rows',
+      if !this.props.transfers
+        div(null, 'Loading...')
+      else
+        @props.transfers.map (transfer) ->
+          Transfer(Object.assign({key: transfer.id}, transfer))
 
 
 Transfer = Reactatron.component 'TransfersList-Transfer',
@@ -24,6 +24,11 @@ Transfer = Reactatron.component 'TransfersList-Transfer',
     size: Reactatron.PropTypes.number.isRequired
 
   render: ->
-    div className: 'TransfersList-Transfer',
-      div null, @props.name
-      div null, formatBytes(@props.size)
+    div className: 'TransfersList-Transfer rows padding-1',
+      div null,
+        @props.name
+        formatBytes(@props.size)
+      div null,
+        progress value: @props.percent_done, max: 100
+      div null,
+        @props.status_message
