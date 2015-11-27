@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
 
-./bin/sass $* --output-style expanded --include-path ./style ./style.sass ./assets/style.css
+./bin/sass $* \
+  --source-map ./assets/style.css.map \
+  --source-map-contents \
+  --source-comments \
+  --follow \
+  --indent-type space \
+  --indent-width 2 \
+  --output-style expanded \
+  --include-path ./style \
+  ./style.sass \
+  ./assets/style.css
