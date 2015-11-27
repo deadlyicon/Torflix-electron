@@ -12,7 +12,8 @@ module.exports = Reactatron.component 'Dashboard',
     files:       Reactatron.PropTypes.any
 
   getInitialState: ->
-    page: 'Transfers' # || 'Files'
+    # page: 'Transfers' # || 'Files'
+    page: 'Files'
 
   onPageChange: (page) ->
     @setState page: page
@@ -30,7 +31,7 @@ module.exports = Reactatron.component 'Dashboard',
       when 'Transfers'
         Transfers(transfers: @props.transfers)
       when 'Files'
-        Files(files: @props.files)
+        Files(directory_id: 0, files: @props.files)
       # when 'Search'
       #   Search()
       else
@@ -69,31 +70,44 @@ Transfer = Reactatron.component 'Dashboard-Transfer',
 Files = Reactatron.component 'Dashboard-Files',
 
   propTypes:
-    files: Reactatron.PropTypes.object
+    files: Reactatron.PropTypes.array
+    directory_id: Reactatron.PropTypes.number.isRequired
 
   render: ->
     if !this.props.files
       return div(null, 'Loading...')
 
-    files = []
-    for id, file of @props.files
-      files.push file
+    directory_id = @props.directory_id
+    allFiles = @props.files
+    files = allFiles.filter (file) ->
+      file.parent_id == directory_id
 
     div className: 'Dashboard-Files',
       files.map (file) ->
-        File(Object.assign({key: file.id}, file))
+        File(key: file.id, file: file, files: allFiles)
 
 
 File = Reactatron.component 'Dashboard-File',
 
   propTypes:
-    name: Reactatron.PropTypes.string.isRequired
+    file: Reactatron.PropTypes.object.isRequired
+    files: Reactatron.PropTypes.array.isRequired
 
   render: ->
+    file = @props.file
+    # console.log(file.isDirectory, file)
+    if file.isDirectory
+      directoryContents = div null,
+        div null, 'DIRECTORY CONTENTS:'
+        Files directory_id: file.id, files: @props.files
+
+
     div className: 'Dashboard-File',
-      div null, @props.name
-
-
+      div className: 'columns',
+        div null, file.parent_id
+        div null, ' '
+        div null, file.name
+      directoryContents
 
 # availability: null
 # callback_url: null

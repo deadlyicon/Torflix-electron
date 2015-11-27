@@ -32,9 +32,8 @@ App.loadStuff = ->
   App.putio.transfers().then (transfers) ->
     App.setState transfers: transfers
 
-  App.putio.directoryContents(0).then (response) ->
-    files = App.state.files || {}
-    Object.assign(files, response.files)
+  # App.putio.directoryContents(0).then (response) ->
+  App.putio.allFiles().then (files) ->
     App.setState files: files
 
 
