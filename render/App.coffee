@@ -29,12 +29,12 @@ App.loadStuff = ->
   App.putio.accountInfo().then (accountInfo) ->
     App.setState accountInfo: accountInfo
 
-  App.putio.transfers().then (transfers) ->
-    App.setState transfers: transfers
+  # App.putio.transfers().then (transfers) ->
+  #   App.setState transfers: transfers
 
-  # App.putio.directoryContents(0).then (response) ->
-  App.putio.allFiles().then (files) ->
-    App.setState files: files
+  # # App.putio.directoryContents(0).then (response) ->
+  # App.putio.allFiles().then (files) ->
+  #   App.setState files: files
 
 
 App.on 'start', ->

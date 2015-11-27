@@ -1,10 +1,11 @@
 Reactatron = require 'Reactatron'
 Columns = require './Columns'
+Button = require './Button'
 Spacer = require './Spacer'
 LogoutButton = require './LogoutButton'
 formatBytes = require '../formatBytes'
 
-{div, button, span} = Reactatron.DOM
+{div, span} = Reactatron.DOM
 
 module.exports = Reactatron.component 'Navbar',
 
@@ -13,9 +14,9 @@ module.exports = Reactatron.component 'Navbar',
 
   render: ->
     Columns className: 'Navbar',
-      button onClick: @props.onPageChange.bind(null, 'Transfers'), 'Transfers'
-      button onClick: @props.onPageChange.bind(null, 'Files'),     'Files'
-      button onClick: @props.onPageChange.bind(null, 'Search'),    'Search'
+      Button onClick: @props.onPageChange.bind(null, 'Transfers'), 'Transfers'
+      Button onClick: @props.onPageChange.bind(null, 'Files'),     'Files'
+      Button onClick: @props.onPageChange.bind(null, 'Search'),    'Search'
       Spacer()
       AccountInfo(@props.accountInfo)
       LogoutButton null, 'Logout'
@@ -25,15 +26,19 @@ module.exports = Reactatron.component 'Navbar',
 
 AccountInfo = Reactatron.component 'Navbar-AccountInfo',
 
+  renderContainer: (children...) ->
+    div className: 'Navbar-AccountInfo', children...
+
   render: ->
 
     if !this.props.avatar_url
-      return div(null, 'Loading...')
-
-    div className: 'Navbar-AccountInfo',
-      DiskSize(size: @props.disk.used)
-      ' / '
-      DiskSize(size: @props.disk.size)
+      @renderContainer div(null, 'Loading...')
+    else
+      @renderContainer(
+        DiskSize(size: @props.disk.used)
+        ' / '
+        DiskSize(size: @props.disk.size)
+      )
 
 DiskSize = Reactatron.component 'Navbar-DiskSize',
 
