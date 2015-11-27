@@ -6,25 +6,27 @@
   right: 0
   height: 100%
   width: 100%
-  overflow: auto
 
-.columns
+.overflow-y
+  overflow-y: auto
+
+.columns, .rows
   display: flex
-  flex-direction: row
   flex-wrap: nowrap
   justify-content: flex-start
   align-items: flex-start
   align-content: flex-start
   > *
+    flex-grow: 0
+    flex-shrink: 0
+
+.columns
+  flex-direction: row
+  > *
     height: 100%
 
 .rows
-  display: flex
   flex-direction: column
-  flex-wrap: nowrap
-  justify-content: flex-start
-  align-items: flex-start
-  align-content: flex-start
   > *
     width: 100%
 

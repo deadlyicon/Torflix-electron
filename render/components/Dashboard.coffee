@@ -6,10 +6,31 @@ Rows = require './Rows'
 
 module.exports = Reactatron.component 'Dashboard',
 
+  getInitialState: ->
+    page: 'Transfers' # || 'Files'
+
+  onPageChange: (page) ->
+    @setState page: page
+
   render: ->
     Rows className: 'Dashboard layer',
-      Navbar(accountInfo: this.props.accountInfo)
-      Transfers(transfers: this.props.transfers)
+      Navbar
+        accountInfo: this.props.accountInfo
+        onPageChange: @onPageChange
+      div className: 'shrink grow overflow-y',
+        @renderPage()
+
+  renderPage: ->
+    switch @state.page
+      when 'Transfers'
+        Transfers(transfers: @props.transfers)
+      when 'Files'
+        Files(files: @props.files)
+      # when 'Search'
+      #   Search()
+      else
+        div(null, 'unknown page', @state.page)
+
 
 
 
@@ -25,7 +46,6 @@ Transfers = Reactatron.component 'Dashboard-Transfers',
       return div(null, 'Loading...')
 
     div className: 'Dashboard-Transfers',
-      div null, 'Transfers'
       @props.transfers.map (transfer) ->
         Transfer(Object.assign({key: transfer.id}, transfer))
 
