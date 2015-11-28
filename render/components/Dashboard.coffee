@@ -17,36 +17,46 @@ module.exports = Reactatron.component 'Dashboard',
 
   getInitialState: ->
     page: 'Transfers' # || 'Files'
+    query: null
 
-  # -- move to mixin -- #
   componentDidMount: ->
-    @DOMNode().addEventListener('keyup', @onKeyup)
+    document.addEventListener('keydown', @onKeyUp)
+
   componentWillUnmount: ->
-    @DOMNode().removeEventListener('keyup', @onKeyup)
-  # / -- move to mixin -- #
+    document.removeEventListener('keydown', @onKeyUp)
 
-  onKeyup: (event) ->
+  onKeyUp: (event) ->
+    console.log('KEYCODE', event.keyCode)
     switch event.keyCode
-      when 191
+      when 191 # /
         focusSearchInput(@DOMNode())
+      when 84 # t
+        @setPage 'Transfers'
+      when 70 # f
+        @setPage 'Files'
 
+  setPage: (page) ->
+    @setState page: page, query: null
 
-  onPageChange: (page) ->
-    @setState page: page
+  onSearch: (query) ->
+    @setState query: query
 
   render: ->
-    Rows className: 'Dashboard layer',
+    Rows
+      className: 'Dashboard layer',
+      # onKeyUp: @onKeyUp
       Navbar
         accountInfo: this.props.accountInfo
-        onPageChange: @onPageChange
+        setPage: @setPage
+        onSearch: @onSearch
       div className: 'shrink grow overflow-y',
         @renderPage()
 
   renderPage: ->
-    if @props.query
+    if @state.query
       return SearchResults
-        query: @props.query
-        queryResults: @props.queryResults
+        query: @state.query
+        queryResults: @state.queryResults
 
     switch @state.page
       when 'Transfers'
@@ -62,7 +72,7 @@ module.exports = Reactatron.component 'Dashboard',
 
 
 focusSearchInput = (DOMNode) ->
-  input = DOMNode().querySelector('.Navbar-SearchForm input')
+  input = DOMNode.querySelector('.Navbar-SearchForm input')
   input.focus()
   input.select()
 

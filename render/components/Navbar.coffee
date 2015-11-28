@@ -11,13 +11,16 @@ module.exports = Reactatron.component 'Navbar',
 
   propTypes:
     accountInfo: Reactatron.PropTypes.object
+    onSearch: Reactatron.PropTypes.func.isRequired
+    setPage: Reactatron.PropTypes.func.isRequired
+
 
   render: ->
     Columns className: 'Navbar',
-      Button onClick: @props.onPageChange.bind(null, 'Transfers'), 'Transfers'
-      Button onClick: @props.onPageChange.bind(null, 'Files'),     'Files'
-      Button onClick: @props.onPageChange.bind(null, 'Search'),    'Search'
-      SearchForm()
+      Button onClick: @props.setPage.bind(null, 'Transfers'), 'Transfers'
+      Button onClick: @props.setPage.bind(null, 'Files'),     'Files'
+      Button onClick: @props.setPage.bind(null, 'Search'),    'Search'
+      SearchForm(onSearch: @props.onSearch)
       AccountInfo(@props.accountInfo)
       LogoutButton null, 'Logout'
 
@@ -49,6 +52,9 @@ DiskSize = Reactatron.component 'Navbar-DiskSize',
 
 SearchForm = Reactatron.component 'Navbar-SearchForm',
 
+  propTypes:
+    onSearch: Reactatron.PropTypes.func.isRequired
+
   inputDOMNode: ->
     @DOMNode().querySelector('input')
 
@@ -57,7 +63,12 @@ SearchForm = Reactatron.component 'Navbar-SearchForm',
 
   onSubmit: (event) ->
     event.preventDefault()
-    @emit 'search', query: @inputDOMNode().value
+    query = @inputDOMNode().value
+    # @emit 'search', query: @inputDOMNode().value
+    @props.onSearch(query)
+
+  onKeyUp: (event) ->
+    event.stopPropagation()
 
   render: ->
     form
@@ -66,5 +77,6 @@ SearchForm = Reactatron.component 'Navbar-SearchForm',
       input
         type: 'text'
         placeholder: 'Search…'
+        onKeyUp: @onKeyUp
 
 
