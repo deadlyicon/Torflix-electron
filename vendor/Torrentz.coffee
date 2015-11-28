@@ -13,7 +13,7 @@ module.exports =
         return unless item.text().includes('»')
         results.push
           id:       item.find('a').first().attr('href').slice(1)
-          title:    item.find('a').first().text()
+          name:     item.find('a').first().text()
           rating:   item.find('.v').first().text()
           date:     item.find('.a').first().text()
           size:     item.find('.s').first().text()

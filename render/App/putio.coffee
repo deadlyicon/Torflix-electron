@@ -13,66 +13,70 @@ module.exports = (App) ->
   App.loginURI = ->
     putio.generateLoginURI()
 
-  setToken = (token) ->
-    return if App.state.token == token
-    putio.token = token
-    localStorage.putioToken = token
-    App.setState putioToken: token
+  App.putio =
+    setToken: (token) ->
+      return if App.state.token == token
+      putio.token = token
+      localStorage.putioToken = token
+      App.setState putioToken: token
 
-  loadAccountInfo = ->
-    accountInfo = App.state.accountInfo
-    if !accountInfo? || accountInfo.token != putio.token
-      reloadAccountInfo()
+    loadAccountInfo: ->
+      accountInfo = App.state.accountInfo
+      if !accountInfo? || accountInfo.token != putio.token
+        @reloadAccountInfo()
 
-  reloadAccountInfo = ->
-    token = putio.token # at request time
-    putio.accountInfo().then (accountInfo) ->
-      accountInfo.token = token
-      localStorage.accountInfo = JSON.stringify(accountInfo)
-      App.setState accountInfo: accountInfo
+    reloadAccountInfo: ->
+      token = putio.token # at request time
+      putio.accountInfo().then (accountInfo) ->
+        accountInfo.token = token
+        localStorage.accountInfo = JSON.stringify(accountInfo)
+        App.setState accountInfo: accountInfo
 
-  loadTransfers = ->
-    App.state.transfers or reloadTransfers()
+    loadTransfers: ->
+      App.state.transfers or @reloadTransfers()
 
-  reloadTransfers = ->
-    putio.transfers().then (transfers) ->
-      localStorage.transfers = JSON.stringify(transfers)
-      App.setState transfers: transfers
+    reloadTransfers: ->
+      putio.transfers().then (transfers) ->
+        localStorage.transfers = JSON.stringify(transfers)
+        App.setState transfers: transfers
 
-  loadFiles = ->
-    App.state.files or reloadFiles()
+    loadFiles: ->
+      App.state.files or @reloadFiles()
 
-  reloadFiles = ->
-    # putio.allFiles().then (files) ->
-    putio.directoryContents(0).then ({files}) ->
-      localStorage.files = JSON.stringify(files)
-      App.setState files: files
+    reloadFiles: ->
+      # putio.allFiles().then (files) ->
+      putio.directoryContents(0).then ({files}) ->
+        localStorage.files = JSON.stringify(files)
+        App.setState files: files
 
-  loadStuff = ->
-    loadAccountInfo()
-    loadTransfers()
-    loadFiles()
+    addTransfer: (magnetLink) ->
+      putio.addTransfer(magnetLink)
+
+    loadStuff: ->
+      @loadAccountInfo()
+      @loadTransfers()
+      @loadFiles()
 
   App.on 'start', ->
-    loadStuff() if App.state.putioToken
+    App.putio.loadStuff() if App.state.putioToken
 
   App.on 'login', (payload) ->
-    setToken(payload.token)
-    loadStuff()
+    App.putio.setToken(payload.token)
+    App.putio.loadStuff()
 
   App.on 'logout', ->
     # throw away token
     # kill cookies
 
-  App.on 'reloadFiles', reloadFiles
+  App.on 'reloadFiles', App.putio.reloadFiles
 
-  App.on 'reloadTransfers', reloadTransfers
+  App.on 'reloadTransfers', App.putio.reloadTransfers
 
 
 
 
   App.on 'addTransfer', ({magnetLink}) ->
-    putio.addTransfer(magnetLink)
+    App.putio.addTransfer(magnetLink)
 
 
 

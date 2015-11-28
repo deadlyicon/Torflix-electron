@@ -13,7 +13,7 @@ module.exports = Reactatron.component 'SearchResults',
     if @props.queryResults?
       div {},
         @props.queryResults?.map (torrent, index) ->
-          Result(key: index, torrent: torrent)
+          Result(key: index, torrent: torrent,)
     else
       div {}, 'Loading…'
 
@@ -21,8 +21,16 @@ Result = Reactatron.component 'SearchResults-Result',
   onClick: ->
     @emit 'downloadTorrent', torrent: @props.torrent
   render: ->
-    div {},
-      Link onClick: @onClick, @props.torrent.title
+    torrent = @props.torrent
+    div className: 'columns',
+      Link onClick: @onClick, torrent.name
+      div className: 'shrink grow'
+      div {}, torrent.rating
+      div {}, torrent.size
+      div {},
+        torrent.seeders
+        ' / '
+        torrent.leachers
 
 
 
