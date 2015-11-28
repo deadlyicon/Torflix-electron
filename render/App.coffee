@@ -16,3 +16,4 @@ App.render = ->
     Login(src: App.loginURI())
 
 require('./App/putio')(App)
+require('./App/torrentz')(App)

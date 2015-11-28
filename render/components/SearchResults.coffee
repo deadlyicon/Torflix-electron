@@ -1,6 +1,6 @@
 Reactatron = require 'Reactatron'
 
-{div, h1} = Reactatron.DOM
+{div, span} = Reactatron.DOM
 
 module.exports = Reactatron.component 'SearchResults',
 
@@ -9,4 +9,23 @@ module.exports = Reactatron.component 'SearchResults',
     queryResults: Reactatron.PropTypes.any
 
   render: ->
-    div {}, @props.query
+    div {},
+      div {}, @props.query
+      @renderResults()
+
+  renderResults: ->
+    console.log('@props.queryResults', @props.queryResults)
+    return null unless @props.queryResults?
+    @props.queryResults.map (result, index) ->
+      div {},
+        span {}, result.title
+
+
+
+# id
+# title
+# rating
+# date
+# size
+# seeders
+# leachers

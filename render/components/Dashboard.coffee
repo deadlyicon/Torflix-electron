@@ -17,7 +17,6 @@ module.exports = Reactatron.component 'Dashboard',
 
   getInitialState: ->
     page: 'Transfers' # || 'Files'
-    query: null
 
   componentDidMount: ->
     document.addEventListener('keydown', @onKeyUp)
@@ -26,7 +25,6 @@ module.exports = Reactatron.component 'Dashboard',
     document.removeEventListener('keydown', @onKeyUp)
 
   onKeyUp: (event) ->
-    console.log('KEYCODE', event.keyCode)
     switch event.keyCode
       when 191 # /
         focusSearchInput(@DOMNode())
@@ -36,10 +34,11 @@ module.exports = Reactatron.component 'Dashboard',
         @setPage 'Files'
 
   setPage: (page) ->
-    @setState page: page, query: null
+    @setState page: page
 
   onSearch: (query) ->
-    @setState query: query
+    @setPage 'Search'
+    @emit 'search', query: query
 
   render: ->
     Rows
@@ -53,18 +52,15 @@ module.exports = Reactatron.component 'Dashboard',
         @renderPage()
 
   renderPage: ->
-    if @state.query
-      return SearchResults
-        query: @state.query
-        queryResults: @state.queryResults
-
     switch @state.page
       when 'Transfers'
         TransfersList(transfers: @props.transfers)
       when 'Files'
         FilesList(files: @props.files)
-      # when 'Search'
-      #   Search()
+      when 'Search'
+        SearchResults
+          query: @props.query
+          queryResults: @props.queryResults
       else
         div(null, 'unknown page', @state.page)
 

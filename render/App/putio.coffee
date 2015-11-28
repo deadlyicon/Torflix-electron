@@ -70,18 +70,3 @@ module.exports = (App) ->
 
 
 
-
-
-  App.state.query = null
-
-  App.on 'search', ({query}) ->
-    App.setState query: query
-
-
-
-
-
-
-
-
-
