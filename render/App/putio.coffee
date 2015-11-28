@@ -2,6 +2,11 @@ Putio = require('Putio')
 
 module.exports = (App) ->
 
+  App.state.putioToken  = localStorage.putioToken
+  App.state.accountInfo = JSON.parse(localStorage.accountInfo||null)
+  App.state.transfers   = JSON.parse(localStorage.transfers||null)
+  App.state.files       = JSON.parse(localStorage.files||null)
+
   putio = new Putio
   putio.token = App.state.putioToken
 
@@ -23,6 +28,7 @@ module.exports = (App) ->
     token = putio.token # at request time
     putio.accountInfo().then (accountInfo) ->
       accountInfo.token = token
+      localStorage.accountInfo = JSON.stringify(accountInfo)
       App.setState accountInfo: accountInfo
 
   loadTransfers = ->
@@ -30,6 +36,7 @@ module.exports = (App) ->
 
   reloadTransfers = ->
     putio.transfers().then (transfers) ->
+      localStorage.transfers = JSON.stringify(transfers)
       App.setState transfers: transfers
 
   loadFiles = ->
@@ -38,6 +45,7 @@ module.exports = (App) ->
   reloadFiles = ->
     # putio.allFiles().then (files) ->
     putio.directoryContents(0).then ({files}) ->
+      localStorage.files = JSON.stringify(files)
       App.setState files: files
 
   loadStuff = ->

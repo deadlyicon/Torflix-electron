@@ -24,11 +24,13 @@ Transfer = Reactatron.component 'TransfersList-Transfer',
     size: Reactatron.PropTypes.number.isRequired
 
   render: ->
-    div className: 'TransfersList-Transfer rows padding-1',
-      div null,
-        @props.name
-        formatBytes(@props.size)
-      div null,
-        progress value: @props.percent_done, max: 100
-      div null,
-        @props.status_message
+    div className: 'TransfersList-Transfer columns padding-1',
+      div className: '', 'X'
+      div className: 'rows',
+        div null,
+          @props.name
+          formatBytes(@props.size)
+        div null,
+          progress value: @props.percent_done, max: 100
+        div null,
+          @props.status_message

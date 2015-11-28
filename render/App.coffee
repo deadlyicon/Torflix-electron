@@ -8,11 +8,6 @@ Dashboard = require './components/Dashboard'
 
 module.exports = App = new Reactatron.App
 
-App.state.putioToken = localStorage.putioToken
-App.state.accountInfo = null
-App.state.transfers = null
-App.state.files = null
-
 App.render = ->
   console.log('rendering', App.state)
   if App.state.putioToken
