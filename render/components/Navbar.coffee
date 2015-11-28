@@ -16,7 +16,6 @@ module.exports = Reactatron.component 'Navbar',
     Columns className: 'Navbar',
       PageButton page: 'Transfers'
       PageButton page: 'Files'
-      PageButton page: 'Search'
       SearchForm() #(onSearch: @props.onSearch)
       AccountInfo(@props.accountInfo)
       LogoutButton null, 'Logout'
@@ -56,15 +55,12 @@ SearchForm = Reactatron.component 'Navbar-SearchForm',
   inputDOMNode: ->
     @DOMNode().querySelector('input')
 
-  componentDidMount: ->
-    @inputDOMNode().focus()
+  # componentDidMount: ->
+  #   @inputDOMNode().focus()
 
   onSubmit: (event) ->
     event.preventDefault()
     @emit 'search', query: @inputDOMNode().value
-
-  onKeyUp: (event) ->
-    event.stopPropagation()
 
   render: ->
     form
@@ -73,6 +69,5 @@ SearchForm = Reactatron.component 'Navbar-SearchForm',
       input
         type: 'text'
         placeholder: 'Search…'
-        onKeyUp: @onKeyUp
 
 
