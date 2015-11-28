@@ -49,8 +49,15 @@ DiskSize = Reactatron.component 'Navbar-DiskSize',
 
 SearchForm = Reactatron.component 'Navbar-SearchForm',
 
+  inputDOMNode: ->
+    @DOMNode().querySelector('input')
+
+  componentDidMount: ->
+    @inputDOMNode().focus()
+
   onSubmit: (event) ->
     event.preventDefault()
+    @emit 'search', query: @inputDOMNode().value
 
   render: ->
     form

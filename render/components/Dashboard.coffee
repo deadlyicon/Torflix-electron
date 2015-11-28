@@ -4,6 +4,7 @@ Columns = require './Columns'
 Rows = require './Rows'
 TransfersList = require './TransfersList'
 FilesList = require './FilesList'
+SearchResults = require './SearchResults'
 
 {div, h1} = Reactatron.DOM
 
@@ -17,6 +18,19 @@ module.exports = Reactatron.component 'Dashboard',
   getInitialState: ->
     page: 'Transfers' # || 'Files'
 
+  # -- move to mixin -- #
+  componentDidMount: ->
+    @DOMNode().addEventListener('keyup', @onKeyup)
+  componentWillUnmount: ->
+    @DOMNode().removeEventListener('keyup', @onKeyup)
+  # / -- move to mixin -- #
+
+  onKeyup: (event) ->
+    switch event.keyCode
+      when 191
+        focusSearchInput(@DOMNode())
+
+
   onPageChange: (page) ->
     @setState page: page
 
@@ -29,6 +43,11 @@ module.exports = Reactatron.component 'Dashboard',
         @renderPage()
 
   renderPage: ->
+    if @props.query
+      return SearchResults
+        query: @props.query
+        queryResults: @props.queryResults
+
     switch @state.page
       when 'Transfers'
         TransfersList(transfers: @props.transfers)
@@ -42,4 +61,8 @@ module.exports = Reactatron.component 'Dashboard',
 
 
 
+focusSearchInput = (DOMNode) ->
+  input = DOMNode().querySelector('.Navbar-SearchForm input')
+  input.focus()
+  input.select()
 

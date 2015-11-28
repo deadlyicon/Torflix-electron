@@ -1,5 +1,6 @@
 require 'shouldhave/Object.clone'
 React = require 'react'
+ReactDOM = require 'react-dom'
 
 module.exports = createReactatronComponent = (displayName, spec) ->
   spec.displayName = displayName
@@ -18,3 +19,6 @@ AppMixin =
 
   cloneProps: ->
     Object.clone(@props)
+
+  DOMNode: ->
+    ReactDOM.findDOMNode(this)

@@ -23,7 +23,7 @@ app.on('ready', function() {
   mainWindow.loadURL('file://' + __dirname + '/render.html');
 
   // Open the DevTools.
-  mainWindow.openDevTools();
+  // mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

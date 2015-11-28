@@ -67,3 +67,21 @@ module.exports = (App) ->
   App.on 'reloadFiles', reloadFiles
 
   App.on 'reloadTransfers', reloadTransfers
+
+
+
+
+
+  App.state.query = null
+
+  App.on 'search', ({query}) ->
+    App.setState query: query
+
+
+
+
+
+
+
+
+
