@@ -6,7 +6,7 @@ module.exports = (App) ->
   App.state.queryResults = null
 
   App.on 'search', ({query}) ->
-    App.setState query: query
+    App.setState page: 'Search', query: query
     Torrentz.search(query).then (results) ->
       App.setState queryResults: results
 

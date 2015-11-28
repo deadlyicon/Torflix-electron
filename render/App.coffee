@@ -15,5 +15,6 @@ App.render = ->
   else
     Login(src: App.loginURI())
 
+require('./App/keys')(App)
 require('./App/putio')(App)
 require('./App/torrentz')(App)
