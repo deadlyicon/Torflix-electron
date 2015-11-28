@@ -35,17 +35,14 @@ File = Reactatron.component 'FilesList-File',
 
   render: ->
     file = @props.file
-    # console.log(file.isDirectory, file)
     if file.isDirectory
-      directoryContents = div null,
-        div null, 'DIRECTORY CONTENTS:'
-        FilesList directory_id: file.id, files: @props.files
+      directoryContents = FilesList
+        directory_id: file.id,
+        files: @props.files
 
 
     div className: 'FilesList-File',
       div className: 'columns',
-        div null, file.parent_id
-        div null, ' '
         div null, file.name
       directoryContents
 
