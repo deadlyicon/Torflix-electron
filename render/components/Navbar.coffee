@@ -17,7 +17,7 @@ module.exports = Reactatron.component 'Navbar',
       Button onClick: @props.onPageChange.bind(null, 'Transfers'), 'Transfers'
       Button onClick: @props.onPageChange.bind(null, 'Files'),     'Files'
       Button onClick: @props.onPageChange.bind(null, 'Search'),    'Search'
-      Spacer()
+      SearchForm()
       AccountInfo(@props.accountInfo)
       LogoutButton null, 'Logout'
 
@@ -41,6 +41,23 @@ AccountInfo = Reactatron.component 'Navbar-AccountInfo',
       )
 
 DiskSize = Reactatron.component 'Navbar-DiskSize',
-
   render: ->
     span {}, formatBytes(@props.size, 2)
+
+
+{form, input} = Reactatron.DOM
+
+SearchForm = Reactatron.component 'Navbar-SearchForm',
+
+  onSubmit: (event) ->
+    event.preventDefault()
+
+  render: ->
+    form
+      onSubmit: @onSubmit
+      className: 'Navbar-SearchForm grow shrink'
+      input
+        type: 'text'
+        placeholder: 'Search…'
+
+
