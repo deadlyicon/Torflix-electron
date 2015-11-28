@@ -1,4 +1,5 @@
 Reactatron = require 'Reactatron'
+Link = require './Link'
 
 {div, span} = Reactatron.DOM
 
@@ -9,16 +10,19 @@ module.exports = Reactatron.component 'SearchResults',
     queryResults: Reactatron.PropTypes.any
 
   render: ->
-    div {},
-      div {}, @props.query
-      @renderResults()
-
-  renderResults: ->
-    console.log('@props.queryResults', @props.queryResults)
-    return null unless @props.queryResults?
-    @props.queryResults.map (result, index) ->
+    if @props.queryResults?
       div {},
-        span {}, result.title
+        @props.queryResults?.map (torrent, index) ->
+          Result(key: index, torrent: torrent)
+    else
+      div {}, 'Loading…'
+
+Result = Reactatron.component 'SearchResults-Result',
+  onClick: ->
+    @emit 'downloadTorrent', torrent: @props.torrent
+  render: ->
+    div {},
+      Link onClick: @onClick, @props.torrent.title
 
 
 

@@ -70,3 +70,12 @@ module.exports = (App) ->
 
 
 
+
+  App.on 'addTransfer', ({magnetLink}) ->
+    putio.addTransfer(magnetLink)
+
+
+
+
+
+

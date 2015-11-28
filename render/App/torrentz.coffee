@@ -10,10 +10,14 @@ module.exports = (App) ->
     Torrentz.search(query).then (results) ->
       App.setState queryResults: results
 
+  App.on 'downloadTorrent', ({torrent}) ->
 
+    App.setState
+      page: 'Downloading'
+      downloadingTorrent: torrent
 
-
-
+    Torrentz.findMagnetLink(torrent.id).then (magnetLink) ->
+      App.emit 'addTransfer', {magnetLink}
 
 
 
