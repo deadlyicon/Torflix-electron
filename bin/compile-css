@@ -8,6 +8,6 @@
   --indent-type space \
   --indent-width 2 \
   --output-style expanded \
-  --include-path ./style \
+  --include-path ./render \
   ./style.sass \
   ./assets/style.css

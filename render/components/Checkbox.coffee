@@ -4,6 +4,6 @@ module.exports = Reactatron.component 'Checkbox',
 
   render: ->
     props = @cloneProps()
+    props.type = 'checkbox'
     props.className = 'Checkbox '+(props.className||'')
-    props['data-checked'] = @props.checked
-    Reactatron.createElement('button', props)
+    Reactatron.createElement('input', props)
