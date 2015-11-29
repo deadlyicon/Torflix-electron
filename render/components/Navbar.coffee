@@ -18,7 +18,7 @@ module.exports = Reactatron.component 'Navbar',
       PageButton page: 'Files'
       SearchForm() #(onSearch: @props.onSearch)
       AccountInfo(@props.accountInfo)
-      LogoutButton null, 'Logout'
+      LogoutButton tabIndex: '-1', 'Logout'
 
 
 PageButton = Reactatron.component 'Navbar-PageButton',
