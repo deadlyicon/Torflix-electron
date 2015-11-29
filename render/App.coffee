@@ -15,6 +15,8 @@ App.render = ->
   else
     Login(src: App.loginURI())
 
-require('./App/keys')(App)
-require('./App/putio')(App)
-require('./App/torrentz')(App)
+require('./actions/authenticationActions')(App)
+require('./actions/pageActions')(App)
+require('./actions/transfersActions')(App)
+require('./actions/filesActions')(App)
+require('./actions/searchActions')(App)

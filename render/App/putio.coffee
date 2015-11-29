@@ -1,85 +1,51 @@
-Putio = require('Putio')
+# putio = new Putio
+# putio.token = App.state.putioToken
 
-module.exports = (App) ->
+# App.loginURI = ->
+#   putio.generateLoginURI()
 
-  App.state.putioToken  = localStorage.putioToken
-  App.state.accountInfo = JSON.parse(localStorage.accountInfo||null)
-  App.state.transfers   = JSON.parse(localStorage.transfers||null)
-  App.state.files       = JSON.parse(localStorage.files||null)
+# App.putio =
+#   putio: -> new Putio(App.state.putioToken)
 
-  putio = new Putio
-  putio.token = App.state.putioToken
+#   setToken: (token) ->
+#     return if App.state.token == token
+#     putio.token = token
+#     localStorage.putioToken = token
+#     App.setState putioToken: token
 
-  App.loginURI = ->
-    putio.generateLoginURI()
+#   loadAccountInfo: ->
+#     accountInfo = App.state.accountInfo
+#     if !accountInfo? || accountInfo.token != putio.token
+#       @reloadAccountInfo()
 
-  App.putio =
-    setToken: (token) ->
-      return if App.state.token == token
-      putio.token = token
-      localStorage.putioToken = token
-      App.setState putioToken: token
+#   reloadAccountInfo: ->
+#     token = putio.token # at request time
+#     putio.accountInfo().then (accountInfo) ->
+#       accountInfo.token = token
+#       localStorage.accountInfo = JSON.stringify(accountInfo)
+#       App.setState accountInfo: accountInfo
 
-    loadAccountInfo: ->
-      accountInfo = App.state.accountInfo
-      if !accountInfo? || accountInfo.token != putio.token
-        @reloadAccountInfo()
+#   loadTransfers: ->
+#     App.state.transfers or @reloadTransfers()
 
-    reloadAccountInfo: ->
-      token = putio.token # at request time
-      putio.accountInfo().then (accountInfo) ->
-        accountInfo.token = token
-        localStorage.accountInfo = JSON.stringify(accountInfo)
-        App.setState accountInfo: accountInfo
+#   reloadTransfers: ->
+#     putio.transfers().then (transfers) ->
+#       localStorage.transfers = JSON.stringify(transfers)
+#       App.setState transfers: transfers
 
-    loadTransfers: ->
-      App.state.transfers or @reloadTransfers()
+#   loadFiles: ->
+#     App.state.files or @reloadFiles()
 
-    reloadTransfers: ->
-      putio.transfers().then (transfers) ->
-        localStorage.transfers = JSON.stringify(transfers)
-        App.setState transfers: transfers
+#   reloadFiles: ->
+#     # putio.allFiles().then (files) ->
+#     putio.directoryContents(0).then ({files}) ->
+#       localStorage.files = JSON.stringify(files)
+#       App.setState files: files
 
-    loadFiles: ->
-      App.state.files or @reloadFiles()
+#   addTransfer: (magnetLink) ->
+#     putio.addTransfer(magnetLink)
 
-    reloadFiles: ->
-      # putio.allFiles().then (files) ->
-      putio.directoryContents(0).then ({files}) ->
-        localStorage.files = JSON.stringify(files)
-        App.setState files: files
-
-    addTransfer: (magnetLink) ->
-      putio.addTransfer(magnetLink)
-
-    loadStuff: ->
-      @loadAccountInfo()
-      @loadTransfers()
-      @loadFiles()
-
-  App.on 'start', ->
-    App.putio.loadStuff() if App.state.putioToken
-
-  App.on 'login', (payload) ->
-    App.putio.setToken(payload.token)
-    App.putio.loadStuff()
-
-  App.on 'logout', ->
-    # throw away token
-    # kill cookies
-
-  App.on 'reloadFiles', App.putio.reloadFiles
-
-  App.on 'reloadTransfers', App.putio.reloadTransfers
-
-
-
-
-  App.on 'addTransfer', ({magnetLink}) ->
-    App.putio.addTransfer(magnetLink)
-
-
-
-
-
-
+#   loadStuff: ->
+#     @loadAccountInfo()
+#     @loadTransfers()
+#     @loadFiles()

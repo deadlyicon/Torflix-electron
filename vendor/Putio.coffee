@@ -11,7 +11,7 @@ class Putio
   ENDPOINT:     'https://put.io'
   API_ENDPOINT: 'https://api.put.io/v2'
 
-  constructor: ->
+  constructor: (@token) ->
     Object.bindAll(this)
 
   URI: (path, query={}) ->

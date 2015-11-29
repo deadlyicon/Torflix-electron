@@ -1,6 +1,5 @@
-Torrentz = require('Torrentz')
-
 module.exports = (App) ->
+  Torrentz = require('Torrentz')
 
   App.state.query = null
   App.state.queryResults = null

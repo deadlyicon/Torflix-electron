@@ -21,10 +21,13 @@ module.exports = (App) ->
     input.focus()
     input.select()
 
+  App.clearSearchField = ->
+    getSearchInput().value = ''
+
 
   App.on 'changePage', ({page}) ->
     App.setState page: page
 
 
-  App.on 'clearSearchField', ({page}) ->
-    getSearchInput().value = ''
+  App.on 'clearSearchField', ->
+    App.clearSearchField()
