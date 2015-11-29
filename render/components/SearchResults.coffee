@@ -12,12 +12,12 @@ module.exports = Reactatron.component 'SearchResults',
     if !@props.queryResults?
       return div className: 'SearchResults', 'Loading…'
     table className: 'SearchResults',
-      thead null,
-        tr null,
-          th null, 'Name'
-          th null
-          th null, 'Age'
-          th null
+      # thead null,
+      #   tr null,
+      #     th null, 'Name'
+      #     th null
+      #     th null, 'Age'
+      #     th null
       tbody null,
         @props.queryResults.map (torrent, index) ->
           Result(key: index, torrent: torrent)
