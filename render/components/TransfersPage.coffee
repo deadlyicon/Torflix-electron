@@ -70,19 +70,33 @@ module.exports = Reactatron.component 'TransfersPage',
         preventDefault = false
     event.preventDefault() if preventDefault
 
+  getInitialState: ->
+    filterTerm: null
+
+  filterList: (filterTerm) ->
+    @setState filterTerm: filterTerm
+
+  filterTransfers: ->
+    filterTerm = @state.filterTerm
+    return @props.transfers unless filterTerm
+    @props.transfers.filter (transfer) ->
+      transfer.name.includes(filterTerm)
+
   render: ->
     div className: 'TransfersList layer rows',
       @renderControls()
       div className: 'grow shrink overflow-y',
         TransfersList
-          transfers: @props.transfers
+          transfers: @filterTransfers()
           isSelected: @isSelected
           toggleSelection: @toggleSelection
           onKeyDown: @onTransferKeyDown
 
   renderControls: ->
     if @state.selectedTransfers.length == 0
-      Navbar accountInfo: @props.accountInfo
+      Navbar
+        accountInfo: @props.accountInfo
+        onSearchChange: @filterList
     else
       Controls
         transfers: @props.transfers

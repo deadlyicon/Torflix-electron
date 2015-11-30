@@ -10,13 +10,14 @@ formatBytes = require '../formatBytes'
 module.exports = Reactatron.component 'Navbar',
 
   propTypes:
-    accountInfo: Reactatron.PropTypes.object
+    accountInfo:   Reactatron.PropTypes.object
+    onSearchChange: Reactatron.PropTypes.func
 
   render: ->
     Columns className: 'Navbar',
       PageButton page: 'Transfers'
       PageButton page: 'Files'
-      SearchForm() #(onSearch: @props.onSearch)
+      SearchForm onChange: @props.onSearchChange
       AccountInfo(@props.accountInfo)
       LogoutButton tabIndex: '-1', 'Logout'
 
@@ -60,14 +61,19 @@ SearchForm = Reactatron.component 'Navbar-SearchForm',
 
   onSubmit: (event) ->
     event.preventDefault()
-    @emit 'search', query: @inputDOMNode().value
+    @emit 'search', query: @refs.input.value
+
+  onKeyUp: (event) ->
+    @props.onChange(@refs.input.value)
 
   render: ->
     form
       onSubmit: @onSubmit
       className: 'Navbar-SearchForm grow shrink'
       input
+        ref: 'input'
         type: 'text'
         placeholder: 'Search…'
+        onKeyUp: @onKeyUp
 
 
