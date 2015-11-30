@@ -1,26 +1,18 @@
 Reactatron = require 'Reactatron'
 
-TransfersList = require './TransfersList'
+TransfersPage = require './TransfersPage.coffee'
 FilesList = require './FilesList'
 SearchResults = require './SearchResults'
-
-{div, h1} = Reactatron.DOM
 
 module.exports = Reactatron.component 'Dashboard',
 
   propTypes:
-    page:        Reactatron.PropTypes.string.isRequired
-    accountInfo: Reactatron.PropTypes.any
-    transfers:   Reactatron.PropTypes.any
-    files:       Reactatron.PropTypes.any
+    page: Reactatron.PropTypes.string.isRequired
 
   render: ->
-    div className: 'layer', @renderPage()
-
-  renderPage: ->
     switch @props.page
       when 'Transfers'
-        TransfersList(@props)
+        TransfersPage(@props)
       when 'Files'
         FilesList(@props)
       when 'Search'

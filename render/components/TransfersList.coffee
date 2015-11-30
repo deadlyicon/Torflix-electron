@@ -3,53 +3,20 @@ require 'shouldhave/Array#remove'
 
 Reactatron = require 'Reactatron'
 formatBytes = require '../formatBytes'
-Navbar = require './Navbar'
 Checkbox = require './Checkbox'
-Button = require './Button'
-Link = require './Link'
 
 {div, progress} = Reactatron.DOM
 
 module.exports = Reactatron.component 'TransfersList',
 
   propTypes:
-    transfers: Reactatron.PropTypes.array
-
-  getInitialState: ->
-    selectedTransfers: []
-
-  toggleSelection: (transfer) ->
-    selectedTransfers = @state.selectedTransfers
-    if selectedTransfers.includes(transfer.id)
-      selectedTransfers.remove(transfer.id)
-    else
-      selectedTransfers.push(transfer.id)
-    @setState selectedTransfers: selectedTransfers
-
-  isSelected: (transfer) ->
-    @state.selectedTransfers.includes(transfer.id)
-
-  clearSelection: ->
-    @setState selectedTransfers: []
-
-  selectAll: ->
-    ids = @props.transfers.map (t) -> t.id
-    @setState selectedTransfers: ids
+    transfers:  Reactatron.PropTypes.array.isRequired
+    isSelected: Reactatron.PropTypes.func.isRequired
+    toggleSelection:   Reactatron.PropTypes.func.isRequired
+    onKeyDown:   Reactatron.PropTypes.func
 
   render: ->
-    div className: 'TransfersList rows',
-      @renderControls()
-      @renderTransfers()
-
-  renderControls: ->
-    if @state.selectedTransfers.length == 0
-      Navbar accountInfo: @props.accountInfo
-    else
-      Controls
-        transfers: @props.transfers
-        selectedTransfers: @state.selectedTransfers
-        selectAll: @selectAll
-        clearSelection: @clearSelection
+    div className: 'TransfersList', @renderTransfers()
 
   renderTransfers: ->
     return div(null, 'Loading...') if !this.props.transfers
@@ -57,23 +24,10 @@ module.exports = Reactatron.component 'TransfersList',
       Transfer
         key: transfer.id
         transfer: transfer
-        selected: @isSelected(transfer)
-        toggleSelection: @toggleSelection
+        selected: @props.isSelected(transfer)
+        toggleSelection: @props.toggleSelection
+        onKeyDown: @props.onKeyDown
 
-
-Controls = Reactatron.component 'TransfersList-Controls',
-  propTypes:
-    selectedTransfers: Reactatron.PropTypes.array.isRequired
-    selectAll: Reactatron.PropTypes.func.isRequired
-    clearSelection: Reactatron.PropTypes.func.isRequired
-
-  render: ->
-    div className: 'TransfersList-Controls columns',
-      Button onClick: @props.selectAll, 'all'
-      Button onClick: @props.clearSelection, 'clear'
-      div className: 'grow flex'
-      Button onClick: null, 'download'
-      Button onClick: null, 'delete'
 
 Transfer = Reactatron.component 'TransfersList-Transfer',
 
@@ -81,32 +35,13 @@ Transfer = Reactatron.component 'TransfersList-Transfer',
     transfer: Reactatron.PropTypes.object.isRequired
     selected: Reactatron.PropTypes.bool.isRequired
     toggleSelection: Reactatron.PropTypes.func.isRequired
+    onKeyDown: Reactatron.PropTypes.func
 
   toggleSelection: ->
     @props.toggleSelection(@props.transfer)
 
-  focusNextTransfer: ->
-    @DOMNode().nextElementSibling?.focus()
-
-  focusPreviousTransfer: ->
-    @DOMNode().previousElementSibling?.focus()
-
   onKeyDown: (event) ->
-    preventDefault = true
-    switch event.keyCode
-      when 38 # up
-        @focusPreviousTransfer()
-      when 40 # down
-        @focusNextTransfer()
-      when 74 # j
-        @focusNextTransfer()
-      when 75 # k
-        @focusPreviousTransfer()
-      when 88 # x
-        @toggleSelection()
-      else
-        preventDefault = false
-    event.preventDefault() if preventDefault
+    @props.onKeyDown(event, @props.transfer)
 
   render: ->
     transfer = @props.transfer
