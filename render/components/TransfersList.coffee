@@ -1,5 +1,9 @@
+require 'shouldhave/Array#includes'
+require 'shouldhave/Array#remove'
+
 Reactatron = require 'Reactatron'
 formatBytes = require '../formatBytes'
+Navbar = require './Navbar'
 Checkbox = require './Checkbox'
 Button = require './Button'
 Link = require './Link'
@@ -12,22 +16,40 @@ module.exports = Reactatron.component 'TransfersList',
     transfers: Reactatron.PropTypes.array
 
   getInitialState: ->
-    selectedTransfers: {}
+    selectedTransfers: []
 
   toggleSelection: (transfer) ->
     selectedTransfers = @state.selectedTransfers
-    selectedTransfers[transfer.id] = !selectedTransfers[transfer.id]
+    if selectedTransfers.includes(transfer.id)
+      selectedTransfers.remove(transfer.id)
+    else
+      selectedTransfers.push(transfer.id)
     @setState selectedTransfers: selectedTransfers
 
   isSelected: (transfer) ->
-    !!@state.selectedTransfers[transfer.id]
+    @state.selectedTransfers.includes(transfer.id)
+
+  clearSelection: ->
+    @setState selectedTransfers: []
+
+  selectAll: ->
+    ids = @props.transfers.map (t) -> t.id
+    @setState selectedTransfers: ids
 
   render: ->
     div className: 'TransfersList rows',
+      @renderControls()
+      @renderTransfers()
+
+  renderControls: ->
+    if @state.selectedTransfers.length == 0
+      Navbar accountInfo: @props.accountInfo
+    else
       Controls
         transfers: @props.transfers
         selectedTransfers: @state.selectedTransfers
-      @renderTransfers()
+        selectAll: @selectAll
+        clearSelection: @clearSelection
 
   renderTransfers: ->
     return div(null, 'Loading...') if !this.props.transfers
@@ -41,12 +63,17 @@ module.exports = Reactatron.component 'TransfersList',
 
 Controls = Reactatron.component 'TransfersList-Controls',
   propTypes:
-    selectedTransfers: Reactatron.PropTypes.object.isRequired
+    selectedTransfers: Reactatron.PropTypes.array.isRequired
+    selectAll: Reactatron.PropTypes.func.isRequired
+    clearSelection: Reactatron.PropTypes.func.isRequired
+
   render: ->
     div className: 'TransfersList-Controls columns',
-      Link onClick: null, 'all'
+      Button onClick: @props.selectAll, 'all'
+      Button onClick: @props.clearSelection, 'clear'
       div className: 'grow flex'
-      Link onClick: null, 'delete'
+      Button onClick: null, 'download'
+      Button onClick: null, 'delete'
 
 Transfer = Reactatron.component 'TransfersList-Transfer',
 
