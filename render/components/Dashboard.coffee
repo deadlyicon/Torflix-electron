@@ -1,7 +1,6 @@
 Reactatron = require 'Reactatron'
+Sidebar = require './Sidebar'
 Navbar = require './Navbar'
-Columns = require './Columns'
-Rows = require './Rows'
 TransfersList = require './TransfersList'
 FilesList = require './FilesList'
 SearchResults = require './SearchResults'
@@ -17,12 +16,13 @@ module.exports = Reactatron.component 'Dashboard',
     files:       Reactatron.PropTypes.any
 
   render: ->
-    Rows
-      className: 'Dashboard layer',
-      Navbar
+    div className: 'Dashboard layer columns',
+      Sidebar
         accountInfo: this.props.accountInfo
-      div className: 'shrink grow overflow-y',
-        @renderPage()
+      div className: 'shrink grow',
+        Navbar null
+        div className: 'shrink grow overflow-y',
+          @renderPage()
 
   renderPage: ->
     switch @props.page

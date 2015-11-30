@@ -1,6 +1,8 @@
 Reactatron = require 'Reactatron'
 formatBytes = require '../formatBytes'
 Checkbox = require './Checkbox'
+Button = require './Button'
+Link = require './Link'
 
 {div, progress} = Reactatron.DOM
 
@@ -22,16 +24,29 @@ module.exports = Reactatron.component 'TransfersList',
 
   render: ->
     div className: 'TransfersList rows',
-      if !this.props.transfers
-        div(null, 'Loading...')
-      else
-        @props.transfers.map (transfer) =>
-          Transfer
-            key: transfer.id
-            transfer: transfer
-            selected: @isSelected(transfer)
-            toggleSelection: @toggleSelection
+      Controls
+        transfers: @props.transfers
+        selectedTransfers: @state.selectedTransfers
+      @renderTransfers()
 
+  renderTransfers: ->
+    return div(null, 'Loading...') if !this.props.transfers
+    @props.transfers.map (transfer) =>
+      Transfer
+        key: transfer.id
+        transfer: transfer
+        selected: @isSelected(transfer)
+        toggleSelection: @toggleSelection
+
+
+Controls = Reactatron.component 'TransfersList-Controls',
+  propTypes:
+    selectedTransfers: Reactatron.PropTypes.object.isRequired
+  render: ->
+    div className: 'TransfersList-Controls columns',
+      Link onClick: null, 'all'
+      div className: 'grow flex'
+      Link onClick: null, 'delete'
 
 Transfer = Reactatron.component 'TransfersList-Transfer',
 
@@ -43,14 +58,23 @@ Transfer = Reactatron.component 'TransfersList-Transfer',
   toggleSelection: ->
     @props.toggleSelection(@props.transfer)
 
+  focusNextTransfer: ->
+    @DOMNode().nextElementSibling?.focus()
+
+  focusPreviousTransfer: ->
+    @DOMNode().previousElementSibling?.focus()
+
   onKeyDown: (event) ->
-    # console.log(event.keyCode)
     preventDefault = true
     switch event.keyCode
-      when 40 # down
-        @DOMNode().nextElementSibling?.focus()
       when 38 # up
-        @DOMNode().previousElementSibling?.focus()
+        @focusPreviousTransfer()
+      when 40 # down
+        @focusNextTransfer()
+      when 74 # j
+        @focusNextTransfer()
+      when 75 # k
+        @focusPreviousTransfer()
       when 88 # x
         @toggleSelection()
       else
