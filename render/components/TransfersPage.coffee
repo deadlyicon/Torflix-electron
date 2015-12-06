@@ -12,75 +12,78 @@ Link = require './Link'
 {div} = Reactatron.DOM
 
 
-HasTransfersSelection =
+# HasTransfersSelection =
 
-  getInitialState: ->
-    selectedTransfers: []
+#   getInitialState: ->
+#     selectedTransfers: []
 
-  toggleSelection: (transfer) ->
-    selectedTransfers = @state.selectedTransfers
-    if selectedTransfers.includes(transfer.id)
-      selectedTransfers.remove(transfer.id)
-    else
-      selectedTransfers.push(transfer.id)
-    @setState selectedTransfers: selectedTransfers
+#   toggleSelection: (transfer) ->
+#     selectedTransfers = @state.selectedTransfers
+#     if selectedTransfers.includes(transfer.id)
+#       selectedTransfers.remove(transfer.id)
+#     else
+#       selectedTransfers.push(transfer.id)
+#     @setState selectedTransfers: selectedTransfers
 
-  isSelected: (transfer) ->
-    @state.selectedTransfers.includes(transfer.id)
+#   isSelected: (transfer) ->
+#     @state.selectedTransfers.includes(transfer.id)
 
-  clearSelection: ->
-    @setState selectedTransfers: []
+#   clearSelection: ->
+#     @setState selectedTransfers: []
 
-  selectAll: ->
-    ids = @props.transfers.map (t) -> t.id
-    @setState selectedTransfers: ids
+#   selectAll: ->
+#     ids = @props.transfers.map (t) -> t.id
+#     @setState selectedTransfers: ids
 
-  isSelected: (transfer) ->
-    @state.selectedTransfers.includes(transfer.id)
+#   isSelected: (transfer) ->
+#     @state.selectedTransfers.includes(transfer.id)
 
-  focusNextTransfer: (element) ->
-    element.nextElementSibling?.focus()
+#   focusNextTransfer: (element) ->
+#     element.nextElementSibling?.focus()
 
-  focusPreviousTransfer: (element) ->
-    element.previousElementSibling?.focus()
+#   focusPreviousTransfer: (element) ->
+#     element.previousElementSibling?.focus()
 
 
 
 module.exports = Reactatron.component 'TransfersPage',
 
-  mixins: [HasTransfersSelection]
+  # mixins: [HasTransfersSelection]
 
   propTypes:
-    transfers: Reactatron.PropTypes.array
+    transfers:         Reactatron.PropTypes.array
+    focusedTransfer:   Reactatron.PropTypes.number
+    selectedTransfers: Reactatron.PropTypes.array
 
-  onTransferKeyDown: (event, transfer) ->
-    preventDefault = true
-    switch event.keyCode
-      when 38 # up
-        @focusPreviousTransfer(event.target)
-      when 40 # down
-        @focusNextTransfer(event.target)
-      when 74 # j
-        @focusNextTransfer(event.target)
-      when 75 # k
-        @focusPreviousTransfer(event.target)
-      when 88 # x
-        @toggleSelection(transfer)
-      else
-        preventDefault = false
-    event.preventDefault() if preventDefault
+  # onTransferKeyDown: (event, transfer) ->
+  #   preventDefault = true
+  #   switch event.keyCode
+  #     when 38 # up
+  #       @focusPreviousTransfer(event.target)
+  #     when 40 # down
+  #       @focusNextTransfer(event.target)
+  #     when 74 # j
+  #       @focusNextTransfer(event.target)
+  #     when 75 # k
+  #       @focusPreviousTransfer(event.target)
+  #     when 88 # x
+  #       @toggleSelection(transfer)
+  #     else
+  #       preventDefault = false
+  #   event.preventDefault() if preventDefault
 
-  getInitialState: ->
-    filterTerm: null
+  # getInitialState: ->
+  #   filterTerm: null
 
-  filterList: (filterTerm) ->
-    @setState filterTerm: filterTerm
+  # filterList: (filterTerm) ->
+  #   @setState filterTerm: filterTerm
 
   filterTransfers: ->
-    filterTerm = @state.filterTerm
-    return @props.transfers unless filterTerm
-    @props.transfers.filter (transfer) ->
-      transfer.name.includes(filterTerm)
+    return @props.transfers
+  #   filterTerm = @state.filterTerm
+  #   return @props.transfers unless filterTerm
+  #   @props.transfers.filter (transfer) ->
+  #     transfer.name.includes(filterTerm)
 
   render: ->
     div className: 'TransfersList layer rows',
@@ -88,21 +91,19 @@ module.exports = Reactatron.component 'TransfersPage',
       div className: 'grow shrink overflow-y',
         TransfersList
           transfers: @filterTransfers()
-          isSelected: @isSelected
-          toggleSelection: @toggleSelection
-          onKeyDown: @onTransferKeyDown
+          selectedTransfers: @props.selectedTransfers
 
   renderControls: ->
-    if @state.selectedTransfers.length == 0
+    if @props.selectedTransfers.length == 0
       Navbar
         accountInfo: @props.accountInfo
-        onSearchChange: @filterList
+        # onSearchChange: @filterList
     else
       Controls
         transfers: @props.transfers
-        selectedTransfers: @state.selectedTransfers
-        selectAll: @selectAll
-        clearSelection: @clearSelection
+        selectedTransfers: @props.selectedTransfers
+        # selectAll: @selectAll
+        # clearSelection: @clearSelection
 
 
 
@@ -111,16 +112,16 @@ module.exports = Reactatron.component 'TransfersPage',
 Controls = Reactatron.component 'TransfersList-Controls',
   propTypes:
     selectedTransfers: Reactatron.PropTypes.array.isRequired
-    selectAll: Reactatron.PropTypes.func.isRequired
-    clearSelection: Reactatron.PropTypes.func.isRequired
 
   render: ->
+    emit = (event) =>
+      => @emit "transfers:#{event}"
     div className: 'TransfersList-Controls columns',
-      Button onClick: @props.selectAll, 'all'
-      Button onClick: @props.clearSelection, 'clear'
+      Button onClick: emit('selectAll'), 'all'
+      Button onClick: emit('clearSelection'), 'clear'
       div className: 'grow flex'
-      Button onClick: null, 'download'
-      Button onClick: null, 'delete'
+      Button onClick: emit('downloadSelection'), 'download'
+      Button onClick: emit('deleteSelection'), 'delete'
 
 
 

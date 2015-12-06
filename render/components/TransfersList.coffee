@@ -10,10 +10,8 @@ Checkbox = require './Checkbox'
 module.exports = Reactatron.component 'TransfersList',
 
   propTypes:
-    transfers:  Reactatron.PropTypes.array.isRequired
-    isSelected: Reactatron.PropTypes.func.isRequired
-    toggleSelection:   Reactatron.PropTypes.func.isRequired
-    onKeyDown:   Reactatron.PropTypes.func
+    transfers:         Reactatron.PropTypes.array.isRequired
+    selectedTransfers: Reactatron.PropTypes.array.isRequired
 
   render: ->
     div className: 'TransfersList', @renderTransfers()
@@ -24,36 +22,29 @@ module.exports = Reactatron.component 'TransfersList',
       Transfer
         key: transfer.id
         transfer: transfer
-        selected: @props.isSelected(transfer)
-        toggleSelection: @props.toggleSelection
-        onKeyDown: @props.onKeyDown
-
+        selectedTransfers: @props.selectedTransfers
 
 Transfer = Reactatron.component 'TransfersList-Transfer',
 
   propTypes:
     transfer: Reactatron.PropTypes.object.isRequired
-    selected: Reactatron.PropTypes.bool.isRequired
-    toggleSelection: Reactatron.PropTypes.func.isRequired
-    onKeyDown: Reactatron.PropTypes.func
+    selectedTransfers: Reactatron.PropTypes.array.isRequired
 
   toggleSelection: ->
-    @props.toggleSelection(@props.transfer)
-
-  onKeyDown: (event) ->
-    @props.onKeyDown(event, @props.transfer)
+    @emit 'transfers:toggleSelection', @props.transfer
 
   render: ->
     transfer = @props.transfer
+    selected = @props.selectedTransfers.includes(transfer.id)
     className = 'TransfersList-Transfer columns'
-    if @props.selected
+    if selected
       className = className+' TransfersList-Transfer-selected'
 
     div className: className, tabIndex:'0', onKeyDown: @onKeyDown,
       div className: 'padding-1',
         Checkbox
           tabIndex: '-1'
-          checked: @props.selected
+          checked: selected
           onChange: @toggleSelection
       div className: 'rows grow shrink padding-1',
         div null,
