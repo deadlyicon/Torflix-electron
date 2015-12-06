@@ -1,6 +1,7 @@
 Reactatron = require 'Reactatron'
 Layout = require './Layout'
 TransfersList = require './TransfersList'
+FilterInput = require './FilterInput'
 Button = require './Button'
 
 {div, input} = Reactatron.DOM
@@ -55,31 +56,5 @@ TransfersListControls = Reactatron.component 'TransfersList-Controls',
         className: 'spacer'
       Button onClick: emit('downloadSelection'), 'download'
       Button onClick: emit('deleteSelection'), 'delete'
-
-
-
-FilterInput = Reactatron.component 'FilterInput',
-
-  propTypes:
-    value:    Reactatron.PropTypes.string.isRequired
-    onChange: Reactatron.PropTypes.func.isRequired
-
-  onChange: (event) ->
-    @props.onChange(@refs.input.value)
-
-  onKeyDown: (event) ->
-    # console.log(event.keyCode)
-    if event.keyCode == 27
-      @props.onChange('')
-
-
-  render: ->
-    input
-      ref: 'input'
-      className: 'FilterInput '+(@props.className||'')
-      type: 'text'
-      value: @props.value
-      onChange: @onChange
-      onKeyDown: @onKeyDown
 
 
