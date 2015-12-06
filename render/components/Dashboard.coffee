@@ -1,6 +1,7 @@
 Reactatron = require 'Reactatron'
 
-TransfersPage = require './TransfersPage.coffee'
+Navbar = require './Navbar'
+TransfersPage = require './TransfersPage'
 FilesList = require './FilesList'
 SearchResults = require './SearchResults'
 

@@ -1,26 +1,20 @@
 Reactatron = require 'Reactatron'
-Columns = require './Columns'
 Button = require './Button'
-Spacer = require './Spacer'
 LogoutButton = require './LogoutButton'
-formatBytes = require '../formatBytes'
+DiskSize = require './DiskSize'
 
 {div, span} = Reactatron.DOM
 
 module.exports = Reactatron.component 'Navbar',
 
   propTypes:
-    accountInfo:    Reactatron.PropTypes.object
-    searchValue:    Reactatron.PropTypes.string.isRequired
-    onSearchChange: Reactatron.PropTypes.func.isRequired
+    accountInfo: Reactatron.PropTypes.object
 
   render: ->
-    Columns className: 'Navbar',
+    div className: 'Navbar columns',
       PageButton page: 'Transfers'
       PageButton page: 'Files'
-      SearchForm
-        value: @props.searchValue
-        onChange: @props.onSearchChange
+      div className: 'spacer'
       AccountInfo(@props.accountInfo)
       LogoutButton tabIndex: '-1', 'Logout'
 
@@ -47,38 +41,34 @@ AccountInfo = Reactatron.component 'Navbar-AccountInfo',
         DiskSize(size: @props.disk.size)
       )
 
-DiskSize = Reactatron.component 'Navbar-DiskSize',
-  render: ->
-    span {}, formatBytes(@props.size, 2)
 
+# {form, input} = Reactatron.DOM
 
-{form, input} = Reactatron.DOM
+# SearchForm = Reactatron.component 'Navbar-SearchForm',
 
-SearchForm = Reactatron.component 'Navbar-SearchForm',
+#   inputDOMNode: ->
+#     @DOMNode().querySelector('input')
 
-  inputDOMNode: ->
-    @DOMNode().querySelector('input')
+#   # componentDidMount: ->
+#   #   @inputDOMNode().focus()
 
-  # componentDidMount: ->
-  #   @inputDOMNode().focus()
+#   onSubmit: (event) ->
+#     event.preventDefault()
+#     @emit 'search', query: @refs.input.value
 
-  onSubmit: (event) ->
-    event.preventDefault()
-    @emit 'search', query: @refs.input.value
+#   onChange: (event) ->
+#     @props.onChange(@refs.input.value)
 
-  onChange: (event) ->
-    @props.onChange(@refs.input.value)
-
-  render: ->
-    console.log('SearchForm', @props)
-    form
-      onSubmit: @onSubmit
-      className: 'Navbar-SearchForm grow shrink'
-      input
-        ref: 'input'
-        type: 'text'
-        placeholder: 'Search…'
-        value: @props.value
-        onChange: @onChange
+#   render: ->
+#     console.log('SearchForm', @props)
+#     form
+#       onSubmit: @onSubmit
+#       className: 'Navbar-SearchForm grow shrink'
+#       input
+#         ref: 'input'
+#         type: 'text'
+#         placeholder: 'Search…'
+#         value: @props.value
+#         onChange: @onChange
 
 

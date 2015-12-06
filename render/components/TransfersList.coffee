@@ -22,8 +22,8 @@ module.exports = Reactatron.component 'TransfersList',
       transfer.name.toLowerCase().includes(filter)
 
   render: ->
-    div
-      className: 'TransfersList',
+    className = 'TransfersList '+(@props.className||'')
+    div className: className,
       @filteredTransfers().map (transfer) =>
         Transfer
           key: transfer.id

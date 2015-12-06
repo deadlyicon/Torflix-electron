@@ -1,13 +1,7 @@
-require 'shouldhave/Array#includes'
-require 'shouldhave/Array#remove'
-
 Reactatron = require 'Reactatron'
-formatBytes = require '../formatBytes'
-Navbar = require './Navbar'
+Layout = require './Layout'
 TransfersList = require './TransfersList'
-Checkbox = require './Checkbox'
 Button = require './Button'
-Link = require './Link'
 
 {div} = Reactatron.DOM
 
@@ -28,38 +22,44 @@ module.exports = Reactatron.component 'TransfersPage',
     @setState filter: filter
 
   render: ->
-    div className: 'TransfersList layer rows', # onKeyUp: @onKeyUp,
-      @renderControls()
-      div className: 'grow shrink overflow-y',
-        TransfersList
-          transfers: @props.transfers
-          filter: @state.filter
-          selectedTransfers: @props.selectedTransfers
+    Layout @props,
+      TransfersListControls null
+      TransfersList
+        className: 'grow shrink overflow-y'
+        transfers: @props.transfers
+        filter: @state.filter
+        selectedTransfers: @props.selectedTransfers
 
-  renderControls: ->
-    if @props.selectedTransfers.length == 0
-      console.log('xxx', @state.filter)
-      return Navbar
-        accountInfo: @props.accountInfo
-        searchValue: @state.filter||''
-        onSearchChange: @filterList
+    # div className: 'TransfersList layer rows', # onKeyUp: @onKeyUp,
+    #   @renderControls()
+    #   div className: 'grow shrink overflow-y',
+    #     TransfersList
+    #       transfers: @props.transfers
+    #       filter: @state.filter
+    #       selectedTransfers: @props.selectedTransfers
 
-    if @state.finding
-      return div(null, 'finding...')
+#   renderControls: ->
+#     if @props.selectedTransfers.length == 0
+#       console.log('xxx', @state.filter)
+#       return Navbar
+#         accountInfo: @props.accountInfo
+#         searchValue: @state.filter||''
+#         onSearchChange: @filterList
 
-    Controls
-      transfers: @props.transfers
-      selectedTransfers: @props.selectedTransfers
-      # selectAll: @selectAll
-      # clearSelection: @clearSelection
+#     if @state.finding
+#       return div(null, 'finding...')
+
+#     Controls
+#       transfers: @props.transfers
+#       selectedTransfers: @props.selectedTransfers
+#       # selectAll: @selectAll
+#       # clearSelection: @clearSelection
 
 
 
 
 
-Controls = Reactatron.component 'TransfersList-Controls',
-  propTypes:
-    selectedTransfers: Reactatron.PropTypes.array.isRequired
+TransfersListControls = Reactatron.component 'TransfersList-Controls',
 
   render: ->
     emit = (event) =>
@@ -67,7 +67,7 @@ Controls = Reactatron.component 'TransfersList-Controls',
     div className: 'TransfersList-Controls columns',
       Button onClick: emit('selectAll'), 'all'
       Button onClick: emit('clearSelection'), 'clear'
-      div className: 'grow flex'
+      div className: 'spacer'
       Button onClick: emit('downloadSelection'), 'download'
       Button onClick: emit('deleteSelection'), 'delete'
 
