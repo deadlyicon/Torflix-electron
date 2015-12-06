@@ -27,20 +27,13 @@ module.exports = Reactatron.component 'TransfersPage',
   filterList: (filter) ->
     @setState filter: filter
 
-  filterTransfers: ->
-    # return @props.transfers
-    filter = @state.filter
-    return @props.transfers unless filter
-    filter = filter.toLowerCase()
-    @props.transfers.filter (transfer) ->
-      transfer.name.toLowerCase().includes(filter)
-
   render: ->
     div className: 'TransfersList layer rows', # onKeyUp: @onKeyUp,
       @renderControls()
       div className: 'grow shrink overflow-y',
         TransfersList
-          transfers: @filterTransfers()
+          transfers: @props.transfers
+          filter: @state.filter
           selectedTransfers: @props.selectedTransfers
 
   renderControls: ->

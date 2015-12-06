@@ -12,17 +12,23 @@ module.exports = Reactatron.component 'TransfersList',
   propTypes:
     transfers:         Reactatron.PropTypes.array.isRequired
     selectedTransfers: Reactatron.PropTypes.array.isRequired
+    filter:            Reactatron.PropTypes.string
+
+  filteredTransfers: ->
+    filter = @props.filter
+    return @props.transfers unless filter
+    filter = filter.toLowerCase()
+    @props.transfers.filter (transfer) ->
+      transfer.name.toLowerCase().includes(filter)
 
   render: ->
-    div className: 'TransfersList', @renderTransfers()
-
-  renderTransfers: ->
-    return div(null, 'Loading...') if !this.props.transfers
-    @props.transfers.map (transfer) =>
-      Transfer
-        key: transfer.id
-        transfer: transfer
-        selectedTransfers: @props.selectedTransfers
+    div
+      className: 'TransfersList',
+      @filteredTransfers().map (transfer) =>
+        Transfer
+          key: transfer.id
+          transfer: transfer
+          selectedTransfers: @props.selectedTransfers
 
 Transfer = Reactatron.component 'TransfersList-Transfer',
 

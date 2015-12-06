@@ -1,6 +1,28 @@
 
 
 
+
+
+
+## UX
+
+- full keyboard control
+
+
+- cmd-f finds torrents (new page)
+- remove search bar from top nav
+- introduce second nav
+- get icon font
+- cmd-option-f filters current list
+- cmd-click & shift-click select from list
+
+
+
+
+
+
+
+
 ## Development
 
 
