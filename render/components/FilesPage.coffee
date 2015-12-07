@@ -9,8 +9,6 @@ Button = require './Button'
 
 module.exports = Reactatron.component 'FilesPage',
 
-  # mixins: [Events]
-
   propTypes:
     files:  Reactatron.PropTypes.array
 
@@ -20,4 +18,7 @@ module.exports = Reactatron.component 'FilesPage',
       FilesList
         className: 'grow shrink overflow-y'
         files: @props.files
+
+
+
 

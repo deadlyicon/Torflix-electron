@@ -6,10 +6,7 @@ Button = require './Button'
 
 {div, input} = Reactatron.DOM
 
-
 module.exports = Reactatron.component 'TransfersPage',
-
-  # mixins: [Events]
 
   propTypes:
     transfers:         Reactatron.PropTypes.array

@@ -1,6 +1,7 @@
 module.exports = (App) ->
 
-  App.state.page = 'Transfers' # || 'Files'
+  # App.state.page = 'Transfers' # || 'Files'
+  App.state.page = 'Files'
 
   document.addEventListener 'keyup', (event) ->
     return if event.target.nodeName == 'INPUT'
