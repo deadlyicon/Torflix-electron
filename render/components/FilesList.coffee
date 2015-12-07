@@ -21,7 +21,14 @@ module.exports = FilesList = Reactatron.component 'FilesList',
 
     sortedFiles = byDirectory[0].sort(sortByName)
 
-    return sortedFiles
+    sortedFiles2 = []
+
+    for file in sortedFiles
+      sortedFiles2.push(file)
+      if file.isDirectory && byDirectory[file.id]
+        sortedFiles2 = sortedFiles2.concat byDirectory[file.id].sort(sortByName)
+
+    return sortedFiles2
 
 
 
@@ -55,9 +62,18 @@ File = Reactatron.component 'FilesList-File',
   render: ->
     file = @props.file
     div className: 'columns',
+      @renderDirectoryToggle()
+      @renderIndentation()
+      div className: 'FilesList-column-id',        file.id
       div className: 'FilesList-column-parent_id', file.parent_id
       div className: 'FilesList-column-icon',      @renderIcon()
       div className: 'FilesList-column-name',      file.name
+
+  renderIndentation: ->
+
+  renderDirectoryToggle: ->
+    return unless @props.file.isDirectory
+    div className: 'FilesList-column-directoryToggle', '>'
 
   renderIcon: ->
     if @props.file.isDirectory
