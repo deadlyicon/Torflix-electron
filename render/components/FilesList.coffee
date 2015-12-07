@@ -62,18 +62,18 @@ File = Reactatron.component 'FilesList-File',
     div className: 'columns',
       @renderIndentation()
       @renderDirectoryToggle()
+      div className: 'FilesList-column-name spacer',
+        @renderIcon()
+        file.name
       div className: 'FilesList-column-id',        file.id
       div className: 'FilesList-column-parent_id', file.parent_id
-      div className: 'FilesList-column-icon',      @renderIcon()
-      div className: 'FilesList-column-name',      file.name
 
   renderIndentation: ->
-    depth = 0
-    file = @props.file
-    while file.parent_directory
-      depth++
-      file = file.parent_directory
-    div null, depth,
+    depth = @props.file.depth || 0
+    return if depth == 0
+    # return 'depth: '+depth
+    for index in [1..depth]
+      div key: index, className: 'FilesList-column-indent'
 
   renderDirectoryToggle: ->
     if @props.file.isDirectory

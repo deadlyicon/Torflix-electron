@@ -27,3 +27,14 @@ linkFiles = (files) ->
   filesById[file.id] = file for file in files
   for file in files
     file.parent_directory = filesById[file.parent_id]
+
+  for file in files
+    file.depth = calculatDepth(file)
+
+
+calculatDepth = (file) ->
+  depth = 0
+  while file.parent_directory
+    depth++
+    file = file.parent_directory
+  depth

@@ -1,16 +1,25 @@
 .FilesList
 
+  > *
+    &:nth-child(even)
+      background: rgb(240, 240, 240)
+    // &:nth-child(odd)
+    //   background: #FFF
+
 .FilesList-column-parent_id
   width: 100px
 
 .FilesList-column-id
   width: 100px
 
-.FilesList-column-icon
-  width: 100px
-
 .FilesList-column-name
+  white-space: nowrap
+  overflow: ellipsis
 
 
 .FilesList-column-directoryToggle
+  width: 1em
+
+
+.FilesList-column-indent
   width: 1em
