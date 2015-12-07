@@ -35,6 +35,14 @@ module.exports = (App) ->
     ids = App.state.transfers.map (t) -> t.id
     App.setState selectedTransfers: ids
 
+  App.on 'transfers:selectTransfer', (transfer) ->
+    selectedTransfers = App.state.selectedTransfers || []
+    selectedTransfers.push(transfer.id)
+    App.setState selectedTransfers: selectedTransfers
+
+  App.on 'transfers:selectSingleTransfer', (transfer) ->
+    App.setState selectedTransfers: [transfer.id]
+
   App.on 'transfers:toggleSelection', (transfer) ->
     selectedTransfers = App.state.selectedTransfers
     if selectedTransfers.includes(transfer.id)
@@ -43,4 +51,15 @@ module.exports = (App) ->
       selectedTransfers.push(transfer.id)
     App.setState selectedTransfers: selectedTransfers
 
+  App.on 'transfers:deleteSelection', ->
+    console.log('deleting', App.state.selectedTransfers)
+    transferIds = App.state.selectedTransfers
+    for transfer in App.state.transfers
+      if transferIds.includes(transfer.id)
+        transfer.deleting = true
+    App.setState selectedTransfers: []
+
+
+  App.on 'transfers:downloadSelection', ->
+    console.log('downloading', App.state.selectedTransfers)
 

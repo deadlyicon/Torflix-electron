@@ -28,30 +28,37 @@ module.exports = Reactatron.component 'TransfersList',
         Transfer
           key: transfer.id
           transfer: transfer
-          selectedTransfers: @props.selectedTransfers
+          selected: @props.selectedTransfers.includes(transfer.id)
 
 Transfer = Reactatron.component 'TransfersList-Transfer',
 
   propTypes:
     transfer: Reactatron.PropTypes.object.isRequired
-    selectedTransfers: Reactatron.PropTypes.array.isRequired
+    selected: Reactatron.PropTypes.bool.isRequired
 
-  toggleSelection: ->
-    @emit 'transfers:toggleSelection', @props.transfer
+  onClick: (event) ->
+    event.preventDefault()
+    return if @props.transfer.deleting
+    if event.metaKey
+      @emit 'transfers:toggleSelection', @props.transfer
+    else if event.shiftKey
+      # TODO select group
+    else if @props.selected
+      return
+    else
+      @emit 'transfers:selectSingleTransfer', @props.transfer
+
+
 
   render: ->
     transfer = @props.transfer
-    selected = @props.selectedTransfers.includes(transfer.id)
     className = 'TransfersList-Transfer columns'
-    if selected
+    if transfer.deleting
+      className = className+' TransfersList-Transfer-deleting'
+    else if @props.selected
       className = className+' TransfersList-Transfer-selected'
 
-    div className: className, tabIndex:'0', onKeyDown: @onKeyDown,
-      div className: 'padding-1',
-        Checkbox
-          tabIndex: '-1'
-          checked: selected
-          onChange: @toggleSelection
+    div className: className, onClick: @onClick,
       div className: 'rows grow shrink padding-1',
         div null,
           transfer.name
