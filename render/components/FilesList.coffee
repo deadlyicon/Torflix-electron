@@ -1,17 +1,20 @@
-Reactatron = require 'Reactatron'
-Columns = require './Columns'
-Rows = require './Rows'
+require 'shouldhave/Array#includes'
+require 'shouldhave/Array#remove'
 
-{div, h1} = Reactatron.DOM
+Reactatron = require 'Reactatron'
+
+{div} = Reactatron.DOM
 
 module.exports = FilesList = Reactatron.component 'FilesList',
 
   propTypes:
     files: Reactatron.PropTypes.array
 
+  getInitialState: ->
+    openDirectories: []
 
   sortedFiles: ->
-
+    openDirectories = @state.openDirectories
     byDirectory = {}
     for file in @props.files
       byDirectory[file.parent_id] ||= []
@@ -23,12 +26,18 @@ module.exports = FilesList = Reactatron.component 'FilesList',
 
     for file in sortedFiles
       sortedFiles2.push(file)
-      if file.isDirectory && byDirectory[file.id]
-        sortedFiles2 = sortedFiles2.concat byDirectory[file.id].sort(sortByName)
+      if file.isDirectory && openDirectories.includes(file.id) && files = byDirectory[file.id]
+        sortedFiles2 = sortedFiles2.concat files.sort(sortByName)
 
     return sortedFiles2
 
-
+  toggleDirectory: (file) ->
+    openDirectories = @state.openDirectories
+    if openDirectories.includes(file.id)
+      openDirectories.remove(file.id)
+    else
+      openDirectories.push(file.id)
+    @setState openDirectories: openDirectories
 
   render: ->
     div
@@ -36,8 +45,13 @@ module.exports = FilesList = Reactatron.component 'FilesList',
       @renderFiles()
 
   renderFiles: ->
-    @sortedFiles().map (file, index) ->
-      File(key: index, file: file)
+    openDirectories = @state.openDirectories
+    @sortedFiles().map (file, index) =>
+      File
+        key: index,
+        file: file,
+        open: openDirectories.includes(file.id)
+        onToggle: @toggleDirectory.bind(null, file)
 
 
 sortByName = (a, b) ->
@@ -56,6 +70,8 @@ File = Reactatron.component 'FilesList-File',
 
   propTypes:
     file: Reactatron.PropTypes.object.isRequired
+    open: Reactatron.PropTypes.bool.isRequired
+    onToggle: Reactatron.PropTypes.func.isRequired
 
   render: ->
     file = @props.file
@@ -76,10 +92,13 @@ File = Reactatron.component 'FilesList-File',
       div key: index, className: 'FilesList-column-indent'
 
   renderDirectoryToggle: ->
-    if @props.file.isDirectory
-      div className: 'FilesList-column-directoryToggle', '>'
-    else
-      div className: 'FilesList-column-directoryToggle'
+    if !@props.file.isDirectory
+      return div className: 'FilesList-column-directoryToggle'
+
+    div
+      className: 'FilesList-column-directoryToggle',
+      onClick: @props.onToggle
+      if @props.open then 'V' else '>'
 
   renderIcon: ->
     if @props.file.isDirectory
