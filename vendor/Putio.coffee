@@ -109,6 +109,8 @@ class Putio
       response
 
 
+  # this is super slow, maybe we need inclimental
+  # updates?
   allFiles: (id=0)->
     console.log('allFiles', id);
     @directoryContents(id).then (response) =>

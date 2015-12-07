@@ -8,8 +8,8 @@ module.exports = (App) ->
   App.reloadFiles = ->
     App.putio.allFiles().then (files) ->
     # App.putio.directoryContents(0).then ({files}) ->
-      localStorage.files = JSON.stringify(files)
       linkFiles(files)
+      localStorage.files = JSON.stringify(files)
       App.setState files: files
 
   App.on 'login', ({token}) ->

@@ -62,18 +62,27 @@ File = Reactatron.component 'FilesList-File',
   render: ->
     file = @props.file
     div className: 'columns',
-      @renderDirectoryToggle()
       @renderIndentation()
+      @renderDirectoryToggle()
       div className: 'FilesList-column-id',        file.id
       div className: 'FilesList-column-parent_id', file.parent_id
       div className: 'FilesList-column-icon',      @renderIcon()
       div className: 'FilesList-column-name',      file.name
 
   renderIndentation: ->
+    depth = 0
+    file = @props.file
+    while file.parent_directory
+      depth++
+      file = file.parent_directory
+    console.log(file.parent_directory)
+    div null, depth,
 
   renderDirectoryToggle: ->
-    return unless @props.file.isDirectory
-    div className: 'FilesList-column-directoryToggle', '>'
+    if @props.file.isDirectory
+      div className: 'FilesList-column-directoryToggle', '>'
+    else
+      div className: 'FilesList-column-directoryToggle'
 
   renderIcon: ->
     if @props.file.isDirectory
