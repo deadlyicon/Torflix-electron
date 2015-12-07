@@ -92,19 +92,22 @@ File = Reactatron.component 'FilesList-File',
       div key: index, className: 'FilesList-column-indent'
 
   renderDirectoryToggle: ->
-    if !@props.file.isDirectory
-      return div className: 'FilesList-column-directoryToggle'
+    className = 'FilesList-directoryToggle '
 
-    div
-      className: 'FilesList-column-directoryToggle',
-      onClick: @props.onToggle
-      if @props.open then 'V' else '>'
+    if !@props.file.isDirectory
+      return div className: className
+
+    className += 'fa fa-lrg '
+    className += if @props.open then 'fa-caret-down' else 'fa-caret-right'
+    div className: className, onClick: @props.onToggle
 
   renderIcon: ->
-    if @props.file.isDirectory
-      'D'
+    className = 'FilesList-icon fa fa-lrg '
+    className += if @props.file.isDirectory
+      'fa-folder'
     else
-      'F'
+      'fa-file'
+    div className: className
 
 
 #   propTypes:
