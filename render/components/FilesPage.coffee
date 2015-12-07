@@ -15,9 +15,15 @@ module.exports = Reactatron.component 'FilesPage',
   render: ->
     Layout @props,
       div className: ''
+      @renderFilesList()
+
+  renderFilesList: ->
+    if @props.files
       FilesList
         className: 'grow shrink overflow-y'
         files: @props.files
+    else
+      div null, 'loading...'
 
 
 

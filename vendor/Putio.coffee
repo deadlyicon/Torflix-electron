@@ -109,21 +109,30 @@ class Putio
       response
 
 
-  # this is super slow, maybe we need inclimental
-  # updates?
-  allFiles: (id=0)->
-    console.log('allFiles', id);
-    @directoryContents(id).then (response) =>
-      files = response.files
-      promises = []
-      for file in response.files
-        if file.isDirectory
-          promises.push @allFiles(file.id)
-      return files if promises.length == 0
-      Promise.all(promises).then (children) ->
-        files.concat(children...)
+  # allFiles: (id=0) ->
+  #   console.log('allFiles', id);
+  #   @directoryContents(id).then (response) =>
+  #     files = response.files
+  #     promises = []
+  #     for file in response.files
+  #       if file.isDirectory
+  #         promises.push @allFiles(file.id)
+  #     return files if promises.length == 0
+  #     Promise.all(promises).then (children) ->
+  #       files.concat(children...)
 
+  reloadAllFiles: (setFiles, id=0) ->
+    files = [];
 
+    loadFiles = (id) =>
+      @directoryContents(id).then (response) ->
+        files = files.concat(response.files)
+        setFiles(files)
+        for file in response.files
+          if file.isDirectory
+            loadFiles(file.id)
+
+    loadFiles(id)
 
 
 

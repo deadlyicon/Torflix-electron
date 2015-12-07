@@ -17,8 +17,6 @@ module.exports = FilesList = Reactatron.component 'FilesList',
       byDirectory[file.parent_id] ||= []
       byDirectory[file.parent_id].push(file)
 
-    console.log(byDirectory)
-
     sortedFiles = byDirectory[0].sort(sortByName)
 
     sortedFiles2 = []
@@ -75,7 +73,6 @@ File = Reactatron.component 'FilesList-File',
     while file.parent_directory
       depth++
       file = file.parent_directory
-    console.log(file.parent_directory)
     div null, depth,
 
   renderDirectoryToggle: ->
