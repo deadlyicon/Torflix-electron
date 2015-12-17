@@ -4,6 +4,7 @@ Navbar = require './Navbar'
 TransfersPage = require './TransfersPage'
 FilesPage = require './FilesPage'
 SearchResults = require './SearchResults'
+SearchPage = require './SearchPage'
 
 module.exports = Reactatron.component 'Dashboard',
 
@@ -17,7 +18,7 @@ module.exports = Reactatron.component 'Dashboard',
       when 'Files'
         FilesPage(@props)
       when 'Search'
-        SearchResults(@props)
+        SearchPage(@props)
       else
         div(null, 'unknown page', @props.page)
 

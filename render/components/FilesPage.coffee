@@ -14,7 +14,7 @@ module.exports = Reactatron.component 'FilesPage',
 
   render: ->
     Layout @props,
-      div className: ''
+      div className: '',
       @renderFilesList()
 
   renderFilesList: ->

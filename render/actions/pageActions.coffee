@@ -21,4 +21,4 @@ module.exports = (App) ->
     App.setState page: page
 
   App.on 'clearSearchField', ->
-    App.clearSearchField()
+    # App.clearSearchField()

@@ -14,6 +14,7 @@ module.exports = Reactatron.component 'Navbar',
     div className: 'Navbar columns',
       PageButton page: 'Transfers'
       PageButton page: 'Files'
+      PageButton page: 'Search'
       div className: 'spacer'
       AccountInfo(@props.accountInfo)
       LogoutButton tabIndex: '-1', 'Logout'
@@ -40,35 +41,4 @@ AccountInfo = Reactatron.component 'Navbar-AccountInfo',
         ' / '
         DiskSize(size: @props.disk.size)
       )
-
-
-# {form, input} = Reactatron.DOM
-
-# SearchForm = Reactatron.component 'Navbar-SearchForm',
-
-#   inputDOMNode: ->
-#     @DOMNode().querySelector('input')
-
-#   # componentDidMount: ->
-#   #   @inputDOMNode().focus()
-
-#   onSubmit: (event) ->
-#     event.preventDefault()
-#     @emit 'search', query: @refs.input.value
-
-#   onChange: (event) ->
-#     @props.onChange(@refs.input.value)
-
-#   render: ->
-#     console.log('SearchForm', @props)
-#     form
-#       onSubmit: @onSubmit
-#       className: 'Navbar-SearchForm grow shrink'
-#       input
-#         ref: 'input'
-#         type: 'text'
-#         placeholder: 'Search…'
-#         value: @props.value
-#         onChange: @onChange
-
 

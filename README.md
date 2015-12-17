@@ -1,7 +1,16 @@
 
+# Torflix
 
 
 
+## Build
+
+
+were using
+
+https://www.npmjs.com/package/electron-builder
+
+we need to make scripts
 
 
 ## UX
