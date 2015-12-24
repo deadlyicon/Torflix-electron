@@ -28,6 +28,9 @@ module.exports = (App) ->
   App.on 'reloadTransfers', ->
     App.reloadTransfers()
 
+  App.on 'transfers:reload', ->
+    App.reloadTransfers()
+
   App.on 'transfers:clearSelection', ->
     App.setState selectedTransfers: []
 

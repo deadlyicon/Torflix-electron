@@ -51,6 +51,7 @@ TransfersListControls = Reactatron.component 'TransfersList-Controls',
         value: @props.filter
         onChange: @props.onFilterChange
         className: 'spacer'
+      Button onClick: emit('reload'), 'reload'
       Button onClick: emit('downloadSelection'), 'download'
       Button onClick: emit('deleteSelection'), 'delete'
 
