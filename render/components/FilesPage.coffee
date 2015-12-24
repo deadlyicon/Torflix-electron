@@ -10,7 +10,7 @@ Button = require './Button'
 module.exports = Reactatron.component 'FilesPage',
 
   propTypes:
-    files:  Reactatron.PropTypes.array
+    files:  Reactatron.PropTypes.object
 
   render: ->
     Layout @props,

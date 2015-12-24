@@ -15,4 +15,4 @@ module.exports = formatBytes = (bytes, decimals) ->
     'YB'
   ]
   i = Math.floor(Math.log(bytes) / Math.log(k))
-  (bytes / k ** i).toPrecision(dm) + ' ' + sizes[i]
+  (bytes / k ** i).toPrecision(dm) + '' + sizes[i]

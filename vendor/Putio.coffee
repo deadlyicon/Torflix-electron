@@ -126,6 +126,7 @@ class Putio
 
     loadFiles = (id) =>
       @directoryContents(id).then (response) ->
+        files.push(response.parent) if id == 0
         files = files.concat(response.files)
         setFiles(files)
         for file in response.files
@@ -152,8 +153,8 @@ class Putio
     if file.isDirectory
       file.directoryContentsLoaded = !!file.fileIds
 
+    file.downloadUrl   = @apiURI "/v2/files/#{file.id}/download"
     if file.isVideo
-      file.downloadUrl   = @apiURI "/v2/files/#{file.id}/download"
       file.mp4StreamUrl  = @apiURI "/v2/files/#{file.id}/mp4/stream"
       file.streamUrl     = @apiURI "/v2/files/#{file.id}/stream"
       file.playlistUrl   = @apiURI "/v2/files/#{file.id}/xspf"

@@ -4,6 +4,7 @@ require 'shouldhave/Array#remove'
 Reactatron = require 'Reactatron'
 formatBytes = require '../formatBytes'
 Checkbox = require './Checkbox'
+Link = require './Link'
 
 {div, progress} = Reactatron.DOM
 
@@ -58,13 +59,34 @@ Transfer = Reactatron.component 'TransfersList-Transfer',
     else if @props.selected
       className = className+' TransfersList-Transfer-selected'
 
+    if transfer.file_id
+      downloadButton = DownloadTransferButton transfer: transfer
+
     div className: className, onClick: @onClick,
       div className: 'rows grow shrink padding-1',
-        div null,
-          transfer.name
-          formatBytes(transfer.size)
+        div className: 'columns ',
+          div null, transfer.name
+          div className: 'spacer'
+          div null, formatBytes(transfer.size)
+          downloadButton
         div null,
           progress max: 100, value: transfer.percent_done||0
         div null,
           transfer.status_message
 
+
+DownloadTransferButton = Reactatron.component 'DownloadTransferButton',
+
+  propTypes:
+    transfer: Reactatron.PropTypes.object.isRequired
+
+  download: (event) ->
+    event.stopPropagation()
+    event.preventDefault()
+    @emit 'transfers:download', @props.transfer
+    @props.onClick?()
+
+  render: ->
+    props = Object.clone(@props)
+    props.onClick = @download
+    Link props, 'download'

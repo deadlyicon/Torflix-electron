@@ -66,3 +66,6 @@ module.exports = (App) ->
   App.on 'transfers:downloadSelection', ->
     console.log('downloading', App.state.selectedTransfers)
 
+  App.on 'transfers:download', (transfer) ->
+    App.emit 'files:download', transfer.file_id
+

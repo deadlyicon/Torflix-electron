@@ -8,7 +8,7 @@ Reactatron = require 'Reactatron'
 module.exports = FilesList = Reactatron.component 'FilesList',
 
   propTypes:
-    files: Reactatron.PropTypes.array
+    files: Reactatron.PropTypes.object
 
   getInitialState: ->
     openDirectories: []
@@ -16,7 +16,7 @@ module.exports = FilesList = Reactatron.component 'FilesList',
   sortedFiles: ->
     openDirectories = @state.openDirectories
     byDirectory = {}
-    for file in @props.files
+    for id, file of @props.files
       byDirectory[file.parent_id] ||= []
       byDirectory[file.parent_id].push(file)
 

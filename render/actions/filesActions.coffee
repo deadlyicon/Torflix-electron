@@ -1,6 +1,11 @@
+require 'shouldhave/Object.values'
+
 module.exports = (App) ->
 
-  App.state.files = JSON.parse(localStorage.files||null)
+  App.state.files = JSON.parse(localStorage.files||'{}')
+
+  # App.loadFile = (fileId) ->
+  #   App.putio.file(fileId).then(addFile)
 
   App.loadFiles = ->
     App.state.files or App.reloadFiles()
@@ -8,10 +13,20 @@ module.exports = (App) ->
   App.reloadFiles = ->
     # App.putio.allFiles().then (files) ->
     # App.putio.directoryContents(0).then ({files}) ->
-    App.putio.reloadAllFiles (files) ->
-      linkFiles(files)
-      localStorage.files = JSON.stringify(files)
-      App.setState files: files
+    App.putio.reloadAllFiles(setFiles)
+
+  App.downloadFile = (fileId) ->
+    file = App.state.files[fileId]
+    if !file
+      alert('cannot download file')
+      return
+
+    if file.isDirectory
+      file.fileIds.forEach(App.downloadFile)
+    else
+      console.info('downloading', file)
+      debugger
+
 
   App.on 'login', ({token}) ->
     App.loadTransfers()
@@ -20,21 +35,43 @@ module.exports = (App) ->
     App.setState files: null
     App.reloadFiles()
 
+  App.on 'files:download', (fileId) ->
+    App.downloadFile(fileId)
 
 
-linkFiles = (files) ->
-  filesById = {}
-  filesById[file.id] = file for file in files
-  for file in files
-    file.parent_directory = filesById[file.parent_id]
+  setFiles = (files) ->
+    filesById = arrayToHashById(files)
 
-  for file in files
-    file.depth = calculatDepth(file)
+    for file in files
+      file.parent_directory = files[file.parent_id]
+
+    for file in files
+      file.depth = calculatDepth(file)
+      if file.isDirectory
+        file.fileIds = files.
+          filter((f) -> f.parent_id == file.id).
+          map((f) -> f.id)
 
 
-calculatDepth = (file) ->
-  depth = 0
-  while file.parent_directory
-    depth++
-    file = file.parent_directory
-  depth
+    localStorage.files = JSON.stringify(filesById)
+    App.setState files: filesById
+    filesById
+
+
+  linkFiles = (filesById) ->
+
+
+  calculatDepth = (file) ->
+    depth = 0
+    while file.parent_directory
+      depth++
+      file = file.parent_directory
+    depth
+
+  download = (file) ->
+
+
+  arrayToHashById = (array) ->
+    byId = {}
+    byId[item.id] = item for item in array
+    byId

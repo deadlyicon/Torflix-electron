@@ -13,5 +13,5 @@ module.exports = Reactatron.component 'SearchPage',
       div className: '',
         SearchForm {}
       SearchResults
-        query: @props.query
+        query: @props.query || ''
         queryResults: @props.queryResults

@@ -1,7 +1,37 @@
+var path = require('path');
+var http = require('http');
+var fs = require('fs');
+
 var app = require('app');  // Module to control application life.
 var BrowserWindow = require('browser-window');  // Module to create native browser window.
 var mainWindow;
 
+app.DOWNLOAD_DIRECTORY_PATH = '/Users/deadlyicon/Downloads/'
+
+// var wget = require('wget');
+// app.wget = function(url){
+//   var name = path.basename(url) || 'unknown';
+//   var destination = app.DOWNLOAD_DIRECTORY_PATH+name;
+//   console.log('downloading', url, '->', destination);
+//   var download = wget.download(url, destination);
+//   download.on('error', function(err) {
+//     console.log(err);
+//   });
+//   return download;
+// };
+
+app.wget = function(url){
+  url = url.replace('https://', 'http://');
+  var name = path.basename(url) || 'unknown';
+  var destination = app.DOWNLOAD_DIRECTORY_PATH+name;
+  console.log('downloading', url, '->', destination);
+
+  var file = fs.createWriteStream(destination);
+  var request = http.get(url, function(response) {
+    throw new Error('response code: '+response.statusCode)
+    response.pipe(file);
+  });
+}
 // BrowserWindow.addDevToolsExtension('/some-directory/react-devtools/shells/chrome')
 
 // Report crashes to our server.
@@ -23,7 +53,7 @@ app.on('ready', function() {
   mainWindow.loadUrl('file://' + __dirname + '/render.html');
 
   // Open the DevTools.
-  // mainWindow.openDevTools();
+  mainWindow.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
