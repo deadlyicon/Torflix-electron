@@ -1,5 +1,5 @@
 var path = require('path');
-var http = require('http');
+var request = require('request');
 var fs = require('fs');
 
 var app = require('app');  // Module to control application life.
@@ -21,17 +21,21 @@ app.DOWNLOAD_DIRECTORY_PATH = '/Users/deadlyicon/Downloads/'
 // };
 
 app.wget = function(url){
-  url = url.replace('https://', 'http://');
+  // url = url.replace('https://', 'http://');
   var name = path.basename(url) || 'unknown';
   var destination = app.DOWNLOAD_DIRECTORY_PATH+name;
   console.log('downloading', url, '->', destination);
 
   var file = fs.createWriteStream(destination);
-  var request = http.get(url, function(response) {
-    throw new Error('response code: '+response.statusCode)
+  return request(url, function(error, response, body) {
+    console.log('response', response);
+    if (response.statusCode >= 400){
+      throw new Error('response code: '+response.statusCode);
+    }
     response.pipe(file);
   });
-}
+  // dialog.showSaveDialog(remote.getCurrentWindow(),{title: 'Download Transfer', defaultPath: 'ass.jpreg'})
+};
 // BrowserWindow.addDevToolsExtension('/some-directory/react-devtools/shells/chrome')
 
 // Report crashes to our server.
